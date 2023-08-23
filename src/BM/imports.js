@@ -1,0 +1,17 @@
+export { default as BranchDashboard } from "./pages/BranchDashboard";
+export { default as BranchLogin } from "./pages/Login";
+export { default as BranchReAllocation } from "./pages/ReAllocation";
+export { default as BranchAddEmployee } from "./pages/AddEmployee";
+export { default as BranchListEmployee } from "./pages/ListEmployee";
+export { default as BranchAllocation } from "./pages/Allocation";
+export { default as BranchAllIds } from "./pages/AllIds";
+export { default as BranchCreateEmployee } from "./pages/CreateEmployee";
+export { default as BranchViewEmployee } from "./pages/ViewEmployee";
+export { default as BranchMovements } from "./pages/Movements";
+export { default as BranchViewCaseDetails } from "./pages/ViewCaseDetails";
+export { default as BranchSidebar } from "./components/Sidebar";
+export { default as BranchCSRReport } from "./pages/CSRReport";
+export { default as BranchNavbar } from "./components/Navbar";
+export { default as BranchBusinessReports } from "./pages/BusinessReports";
+export { default as BranchPayrolls } from "./pages/Payrolls";
+export { default as BranchEmployeePayroll } from "./pages/EmployeePayroll";

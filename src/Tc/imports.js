@@ -1,0 +1,16 @@
+export { default as TCDashboard } from "./pages/TCDashboard";
+export { default as TCReAllocation } from "./pages/ReAllocation";
+export { default as TCAddEmployee } from "./pages/AddEmployee";
+export { default as TCListEmployee } from "./pages/ListEmployee";
+export { default as TCAllocation } from "./pages/Allocation";
+export { default as TCAllIds } from "./pages/AllIds";
+export { default as TCCreateEmployee } from "./pages/CreateEmployee";
+export { default as TCViewEmployee } from "./pages/ViewEmployee";
+export { default as TCCaseList } from "./pages/CaseList";
+export { default as TCViewCaseDetails } from "./pages/ViewCaseDetails";
+export { default as TCMyLeads } from "./pages/MyLeads";
+export { default as TCAddMyLeads } from "./pages/AddMyLeads";
+export { default as TCMyProfile } from "./pages/MyProfile";
+export { default as TCSidebar } from "./components/Sidebar";
+export { default as TCNavbar } from "./components/Navbar";
+export { default as TCTimer } from "./pages/Timer";

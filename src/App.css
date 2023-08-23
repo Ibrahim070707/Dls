@@ -1,0 +1,197 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
+
+.sidebar {
+  box-shadow: rgb(113 122 131 / 11%) 0px 7px 30px 0px;
+}
+
+.nav-item,
+.navbar {
+  z-index: 10000;
+}
+
+.hovernav:hover {
+  background: linear-gradient(to right, #f5874c, #fa5b05);
+}
+
+.Activenav {
+  background: linear-gradient(to right, #f5874c, #fa5b05);
+}
+
+@media screen and (max-width: 800px) {
+  .sidebar {
+    z-index: 10000000;
+  }
+}
+
+.e-dlg-center-center,
+.e-quick-popup-wrapper.e-device {
+  z-index: 1000000 !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(216, 216, 216);
+  border-radius: 40px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* color-picker style  */
+
+#preview {
+  background: transparent url("https://ej2.syncfusion.com/react/demos/src/color-picker/images/pen.png") no-repeat;
+  display: inline-block;
+  height: 80px;
+  margin: 10px 0;
+  min-width: 300px;
+  max-width: 600px;
+  background-color: #008000;
+}
+
+.e-input-group:not(.e-float-icon-left),
+.e-input-group.e-success:not(.e-float-icon-left),
+.e-input-group.e-warning:not(.e-float-icon-left),
+.e-input-group.e-error:not(.e-float-icon-left),
+.e-input-group.e-control-wrapper:not(.e-float-icon-left),
+.e-input-group.e-control-wrapper.e-success:not(.e-float-icon-left),
+.e-input-group.e-control-wrapper.e-warning:not(.e-float-icon-left),
+.e-input-group.e-control-wrapper.e-error:not(.e-float-icon-left) {
+  border: none;
+}
+
+.CustomCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ML16 {
+  margin-left: 16%;
+}
+
+.ML15 {
+  margin-left: 15%;
+}
+
+.TcSmallSidebarWidth {
+  margin-left: 12%;
+}
+
+.BMSidebarWidth {
+  margin-left: 14%;
+}
+
+.SMF {
+  font-size: 10px;
+}
+
+.f01 {
+  font-size: 11.5px;
+}
+
+.f02 {
+  font-size: 12.5px;
+}
+
+.f03 {
+  font-size: 13.5px;
+}
+
+/* Serach input  */
+.BorderRight {
+  border-right-width: 1px;
+}
+
+.input-elevated {
+  font-size: 16px;
+  line-height: 1.5;
+  border: none;
+  background: transparent;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 5px;
+  width: 300px;
+  padding: 0.5em 1em 0.5em 2.5em;
+}
+
+.input-elevated::placeholder {
+  color: #838d99;
+}
+
+.input-elevated:focus {
+  outline: none;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.16);
+}
+
+/* DropDown Menu */
+.dropdown {
+  position: relative;
+  /* display: inline-block; */
+}
+
+.dropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 1;
+}
+
+.Notificationdropdown {
+  position: relative;
+  /* display: inline-block; */
+}
+
+.Notificationdropdown-content {
+  display: block;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 270px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 10000000000000;
+  right: 4%;
+}
+
+.NavTabs {
+  background: #f1f1f1;
+  color: #000;
+}
+
+.NavTabs.active {
+  background: #fa5b05;
+  color: #fff;
+}
+
+.ant-modal-content .ant-btn-default:hover {
+  background-color: #1677ff;
+  color: white;
+}
+
+.ant-modal-content .ant-btn-primary {
+  background-color: #1677ff;
+  color: white;
+}
+
+.ant-menu-title-content:hover {
+  color: white;
+}
+
+.ant-menu-submenu-inline:hover {
+  color: white;
+}
+
+.ant-menu-item .ant-menu-item-selected {
+  background-color: blue;
+  color: black;
+}
+
+.apexcharts-toolbar .apexcharts-menu-icon {
+  display: none;
+}

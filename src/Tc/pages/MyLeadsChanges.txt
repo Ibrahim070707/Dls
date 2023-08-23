@@ -1,0 +1,2 @@
+Policy Type in Create Case - Comprehensive,Third Party,No Policy
+customer_type - Individual,Company

@@ -1,0 +1,107 @@
+/* Dropdown button */
+.sidebar .dropdown-btn {
+  width: 100%;
+  padding: 10px 20px;
+
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Dropdown button on hover */
+.sidebar .dropdown-btn:hover {
+  background-color: #ddd;
+}
+
+/* Dropdown menu */
+.sidebar .dropdown-container {
+  display: none;
+  padding-left: 12%;
+}
+
+/* Show the dropdown menu when the button is clicked */
+.sidebar .dropdown-btn.active + .dropdown-container {
+  display: block;
+}
+
+/* Style the dropdown items */
+.sidebar .dropdown-container .dropdown-item {
+  padding: 8px 0;
+  display: block;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #555;
+}
+
+/* Dropdown items on hover */
+.sidebar .dropdown-container .dropdown-item:hover {
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+.centeredSideNav {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Add an arrow icon to the dropdown buttons */
+.sidebar .dropdown-btna {
+  /* content: "\25BE"; */
+  content: "";
+  float: right;
+  margin-left: 5px;
+}
+
+.sidebar .dropdown-btn span::after {
+  /* content: "\25BE"; */
+  content: "\27A7";
+  float: right;
+  margin-left: 5px;
+}
+.sidebar .dropdown-btna {
+  width: 100%;
+  padding: 10px 20px;
+
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Dropdown button on hover */
+/* .sidebar .dropdown-btna: {
+  color: black;
+  background-color: #f1f1f1;
+} */
+
+/* Rotate the arrow icon when dropdown is active */
+.SideNavIcons.active::after {
+  transform: rotate(90deg);
+}
+.SideNavIcons {
+  color: white;
+  background: transparent;
+}
+.SideNavIcons:hover {
+  color: black;
+
+  background-color: #f1f1f1;
+}
+.SideNavIcons.activenav {
+  /* background: linear-gradient(320deg, rgb(85, 44, 209), rgb(147, 114, 247)); */
+  background: linear-gradient(320deg, #0d2c6e, #4270d4);
+  color: white;
+}
+.SideNavIcons.activenav:hover {
+  /* background: linear-gradient(320deg, rgb(147, 114, 247), rgb(85, 44, 209)); */
+  background: linear-gradient(320deg, #4270d4, #0d2c6e);
+  color: white;
+}
+.activenavLinks {
+  background: #f1f1f1;
+  color: #000;
+}
