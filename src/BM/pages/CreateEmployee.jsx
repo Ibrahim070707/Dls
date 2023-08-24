@@ -758,54 +758,51 @@ function CreateEmployee() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
                 <div className="text-center">
-                  <Label label="Photo" Required={true} />
+                  <Label label="Photo" />
                   <div className="relative">
                     <input
                       className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-emerald-500 f01"
                       id="multiple_files"
                       type="file"
                       accept="image/*"
-                      required
                       onChange={(e) => setPhoto(e.target.files[0])}
                     />
                   </div>
                 </div>
                 <div className="text-center">
-                  <Label label="ID Proof" Required={true} />
+                  <Label label="ID Proof" />
                   <div className="relative">
                     <input
                       className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-emerald-500 f01"
                       id="multiple_files"
                       type="file"
                       accept="image/*"
-                      required
                       onChange={(e) => setIdProof(e.target.files[0])}
-
                     />
                   </div>
                 </div>
                 <div className="text-center">
-                  <Label label="Address Proof" Required={true} />
+                  <Label label="Address Proof" />
                   <div className="relative">
                     <input
                       className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-emerald-500 f01"
                       id="multiple_files"
                       type="file"
                       accept="image/*"
-                      required
+
                       onChange={(e) => setAddressProof(e.target.files[0])}
                     />
                   </div>
                 </div >
                 <div className="text-center">
-                  <Label label="Resume" Required={true} />
+                  <Label label="Resume" />
                   <div className="relative">
                     <input
                       className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-emerald-500 f01"
                       id="multiple_files"
                       type="file"
                       accept=".pdf"
-                      required
+
                       onChange={(e) => setResume(e.target.files[0])}
 
                     />
@@ -813,14 +810,14 @@ function CreateEmployee() {
                 </div>
 
                 <div className="text-center">
-                  <Label label="Application Form" Required={true} />
+                  <Label label="Application Form" />
                   <div className="relative">
                     <input
                       className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-emerald-500 f01"
                       id="multiple_files"
                       type="file"
                       accept=".pdf"
-                      required
+
                       onChange={(e) => setCancelationForm(e.target.files[0])}
                     />
                   </div>

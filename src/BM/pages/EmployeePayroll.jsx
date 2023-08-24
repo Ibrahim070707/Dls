@@ -17,8 +17,10 @@ function EmployeePayroll() {
     const [FormData, setFormData] = useState({});
     const [BankData, setBankData] = useState({});
     const [EmployeeTimeMonthlyReport, setEmployeeTimeMonthlyReport] = useState([])
-    const [EmployeeTime, setEmployeeTime] = useState({})
+    const [EmployeeTime, setEmployeeTime] = useState({ Time: "", Status: "", Salary: "" })
     const [ShowMonthlyReport, setShowMonthlyReport] = useState(false)
+    const d = new Date();
+    let month = d.getMonth();
 
     const ApiFetch = () => {
         var myHeaders = new Headers();
@@ -81,6 +83,7 @@ function EmployeePayroll() {
             .then(response => response.json())
             .then(result => {
                 setEmployeeTime({ ...EmployeeTime, ["Time"]: result.Data, ["Status"]: result.TimeStatus })
+                GetEmployeeMonthSalary();
             })
             .catch(error => console.log('error', error));
     }
@@ -109,6 +112,7 @@ function EmployeePayroll() {
         ApiFetch();
         GetEmployeeTime();
         GetCallHistory();
+
         GetBankData(id)
     }, []);
     const handleOnSubmit = () => {
@@ -178,6 +182,32 @@ function EmployeePayroll() {
                 }
             })
             .catch((error) => console.log("error", error));
+    }
+    const GetEmployeeMonthSalary = () => {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${Token}`);
+
+        var raw = JSON.stringify({
+            "emp_id": id,
+            "month": month + 1
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(`${Base_Url}CountEmployeeSalary`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result.Status === 200) {
+                    setEmployeeTime({ ...EmployeeTime, ["Salary"]: result.Salary })
+                }
+            })
+            .catch(error => console.log('error', error));
     }
     return (
         <>
@@ -367,7 +397,18 @@ function EmployeePayroll() {
                             </div>
                             <div>
                                 <Label label="Total Time Worked" />
-                                <p className="text-sm font-semibold" style={{ color: EmployeeTime.TimeStatus === 1 ? "green" : "red" }}>{EmployeeTime.Time}</p>
+                                <p className="text-sm font-semibold" style={{ color: EmployeeTime.TimeStatus == 1 ? "green" : "red" }}>{EmployeeTime.Time}</p>
+                            </div>
+                            <div>
+                                <Label label="Total Salary Till Now" />
+                                <div className="date-picker">
+                                    <input
+                                        className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
+                                        id="salary"
+                                        defaultValue={EmployeeTime.Salary}
+                                        placeholder="Enter Monthly Salary"
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <p onClick={() => setShowMonthlyReport(true)} className="text-sm font-semibold cursor-pointer" >Click Here To View Monthly</p>
