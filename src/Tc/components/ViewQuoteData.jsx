@@ -241,7 +241,6 @@ function ViewQuoteData({ Data, RemindersFunction }) {
             .catch(error => console.log('error', error));
     }
 
-    console.log("Data.Quotesdata", Data.Quotesdata);
     return (
         <>
             {loader === true ? <CustomLoader /> :
@@ -784,7 +783,7 @@ function ViewQuoteData({ Data, RemindersFunction }) {
                                     <div className="mb-2">
                                         {
                                             Data.Quotesdata.lenght === 1 ? "" :
-                                                <input type="radio" name='radioinput' value={ol.id} onChange={handleSelectCheckbox} className='float-right mr-5' style={{ width: "23px", height: "22px" }} />
+                                                <input type="radio" name='radioinput' value={ol.quote_id} onChange={handleSelectCheckbox} className='float-right mr-5' style={{ width: "23px", height: "22px" }} />
                                         }
                                         <div className="grid grid-cols-3 mt-5 mx-5">
                                             <div

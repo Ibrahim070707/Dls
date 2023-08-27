@@ -17,7 +17,7 @@ function EmployeePayroll() {
     const [FormData, setFormData] = useState({});
     const [BankData, setBankData] = useState({});
     const [EmployeeTimeMonthlyReport, setEmployeeTimeMonthlyReport] = useState([])
-    const [EmployeeTime, setEmployeeTime] = useState({ Time: "", Status: "", Salary: "" })
+    const [EmployeeTime, setEmployeeTime] = useState({})
     const [ShowMonthlyReport, setShowMonthlyReport] = useState(false)
     const d = new Date();
     let month = d.getMonth();
@@ -82,7 +82,7 @@ function EmployeePayroll() {
         fetch(`${Base_Url}CalculateEmployeeTime`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                setEmployeeTime({ ...EmployeeTime, ["Time"]: result.Data, ["Status"]: result.TimeStatus })
+                setEmployeeTime({ ...EmployeeTime, ["Status"]: result.TimeStatus })
                 GetEmployeeMonthSalary();
             })
             .catch(error => console.log('error', error));
@@ -209,6 +209,7 @@ function EmployeePayroll() {
             })
             .catch(error => console.log('error', error));
     }
+
     return (
         <>
             {loader ? (
@@ -396,10 +397,6 @@ function EmployeePayroll() {
                                 </div>
                             </div>
                             <div>
-                                <Label label="Total Time Worked" />
-                                <p className="text-sm font-semibold" style={{ color: EmployeeTime.TimeStatus == 1 ? "green" : "red" }}>{EmployeeTime.Time}</p>
-                            </div>
-                            <div>
                                 <Label label="Total Salary Till Now" />
                                 <div className="date-picker">
                                     <input
@@ -411,7 +408,7 @@ function EmployeePayroll() {
                                 </div>
                             </div>
                             <div>
-                                <p onClick={() => setShowMonthlyReport(true)} className="text-sm font-semibold cursor-pointer" >Click Here To View Monthly</p>
+                                <p onClick={() => setShowMonthlyReport(true)} className="text-sm font-semibold cursor-pointer mt-[1.6rem]" >Click Here To View Monthly</p>
                             </div>
                         </div>
                         <div className="flex justify-center items-center mt-6 mb-3">

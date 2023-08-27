@@ -66,10 +66,6 @@ function ViewCaseDetails({ RemindersData, GetRemindersData }) {
     getDataWithQuote()
     ApiFetch()
   }, []);
-
-
-
-
   return (
     <div className="bg-gray-200" style={{ height: "auto", minHeight: "160vh" }}>
       <Toaster
@@ -88,31 +84,26 @@ function ViewCaseDetails({ RemindersData, GetRemindersData }) {
           className="grid mx-5 gap-5"
           style={{ gridTemplateColumns: "72% auto", gridAutoColumns: "auto" }}
         >
-          {Data.sub_status == "1" ? (
+          {Data.sub_status == 1 ? (
             <AddQuote Data={Data} RemindersFunction={GetRemindersData} />
-          ) : Data.sub_status == "2" ? (
+          ) : Data.sub_status == 2 ? (
             <ViewQuoteData
               RemindersFunction={GetRemindersData}
               Data={QuoteData}
             />
-          ) :
-            //  Data.sub_status == "3" ? (
-            //   <Convience Data={QuoteData} />
-            // )
-            //  :
-            Data.sub_status == "4" ? (
-              <Appointment
-                RemindersFunction={GetRemindersData}
-                Data={QuoteData} />
-            ) : Data.sub_status == "5" ? (
-              <Convert Data={QuoteData} RemindersFunction={GetRemindersData} />
-            ) : Data.sub_status == "6" ? (
-              <Lost Data={QuoteData} RemindersFunction={GetRemindersData} />
-            ) : (
-              <div className="bg-white mt-5 rounded-2xl w-full mb-9 flex justify-center items-center">
-                No Data Available
-              </div>
-            )}
+          ) : Data.sub_status == 4 ? (
+            <Appointment
+              RemindersFunction={GetRemindersData}
+              Data={QuoteData} />
+          ) : Data.sub_status == 5 ? (
+            <Convert Data={QuoteData} RemindersFunction={GetRemindersData} />
+          ) : Data.sub_status == 6 ? (
+            <Lost Data={QuoteData} RemindersFunction={GetRemindersData} />
+          ) : (
+            <div className="bg-white mt-5 rounded-2xl w-full mb-9 flex justify-center items-center">
+              No Data Available
+            </div>
+          )}
           <div>
             <Reminders Data={RemindersData} />
           </div>
