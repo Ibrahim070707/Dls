@@ -44,6 +44,7 @@ import {
 } from "./Movments/imports";
 
 import NonFound from "./BM/pages/NonFound";
+import PdfDonwload from "./Tc/pages/PdfDonwload";
 const App = () => {
   const { currentMode, activeMenu, setCurrentMode } = useStateContext();
   const WhoIsLoginIn = sessionStorage.getItem("WhoIsLoginIn");
@@ -225,11 +226,16 @@ const App = () => {
                       />
                       <Route
                         path="/MyLeads"
-                        element={<TCMyLeads RemindersData={RemindersData} />}
+                        element={
+                          <React.Suspense>
+                            <TCMyLeads RemindersData={RemindersData} />
+                          </React.Suspense>
+                        }
                       />
                       <Route path="/AddMyLeads" element={<TCAddMyLeads />} />
                       <Route path="/MyProfile" element={<TCMyProfile />} />
                       <Route path="/PayRoll" element={<PayRoll />} />
+                      <Route path="/PdfDonwload" element={<PdfDonwload />} />
                       <Route
                         path="/ViewCaseDetails/:id"
                         element={

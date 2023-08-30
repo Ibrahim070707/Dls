@@ -5,6 +5,8 @@ import { FaEnvelope, FaSlash } from "react-icons/fa";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { Input, TimePicker } from "antd";
 import { toast } from "react-hot-toast";
+import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+
 import { useNavigate } from "react-router-dom";
 
 function AddQuote({ Data, RemindersFunction }) {
@@ -99,6 +101,7 @@ function AddQuote({ Data, RemindersFunction }) {
       SaveApiCall();
       AddReminder();
       AddQuotePremiumData();
+      generateAndDownloadPDF();
       var myHeaders = new Headers();
       myHeaders.append("Accept", "application/json");
       myHeaders.append("Authorization", `Bearer ${Token}`);
@@ -234,9 +237,131 @@ function AddQuote({ Data, RemindersFunction }) {
       })
       .catch(error => console.log('error', error));
   }
+
+
+
+
+
+
+
+
+  // Create PDF component
+
+
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: 'column',
+      backgroundColor: '#FFFFFF',
+      padding: '20px',
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1,
+    },
+    table: {
+      width: '100%',
+      borderCollapse: 'collapse',
+      marginTop: '20px',
+    },
+    tableHeader: {
+      backgroundColor: '#f2f2f2',
+    },
+    tableCell: {
+      border: '1px solid #ccc',
+      padding: '8px',
+    },
+    downloadButton: {
+      marginTop: '20px',
+      padding: '10px 20px',
+      backgroundColor: '#007BFF',
+      color: '#FFF',
+      border: 'none',
+      cursor: 'pointer',
+    },
+  });
+
+
+
+
+  const generateAndDownloadPDF = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Accept", "application/json");
+    myHeaders.append("Authorization", `Bearer ${Token}`);
+
+    var formdata = new FormData();
+
+    QuoteIdsRef.current.map((re) => {
+      formdata.append("QuoteIds[]", re);
+    });
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch(`${Base_Url}GetQuotePremiumdataById`, requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        pdfInstance(QuotationPremium, result.Data)
+        setTimeout(() => {
+          document.getElementById("Clickable").click()
+        }, 1000);
+      })
+      .catch(error => console.log('error', error));
+  };
+
+  const pdfInstance = (QuoteData, Data) => (
+    <Document>
+      <Page style={styles.page}>
+        <View style={styles.section}>
+          <Text style={{ fontSize: '18px', marginBottom: '10px' }}>Table Example</Text>
+          <table style={styles.table}>
+            <thead style={styles.tableHeader}>
+              <tr>
+                <th style={styles.tableCell}>Insurer</th>
+                <th style={styles.tableCell}>Tariif Descount</th>
+                <th style={styles.tableCell}>On Damage Rate</th>
+                <th style={styles.tableCell}>Addon Rate</th>
+                <th style={styles.tableCell}>Total Premium Rate</th>
+                <th style={styles.tableCell}>Net Premium</th>
+                <th style={styles.tableCell}>Gross Premium</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                QuoteData.map((el, index) => {
+                  return (
+                    <>
+                      <tr key={index}>
+                        <td style={styles.tableCell}>{Data[index].Name}</td>
+                        <td style={styles.tableCell}>{el.tariif_descount}</td>
+                        <td style={styles.tableCell}>{el.od_rate}</td>
+                        <td style={styles.tableCell}>{el.addon_rate}</td>
+                        <td style={styles.tableCell}>{el.tp_rate}</td>
+                        <td style={styles.tableCell}>{el.net_premium}</td>
+                        <td style={styles.tableCell}>{el.gross_premium}</td>
+                      </tr>
+                    </>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </View>
+      </Page>
+    </Document>
+  );
+
   return (
     <>
       <div className="bg-white mt-5 rounded-2xl w-full mb-9">
+
+        <PDFDownloadLink document={<pdfInstance />} id="Clickable" fileName="my-pdf-document.pdf">
+          {/* {({ loading }) => (loading ? 'Loading document...' : 'Download now!')} */}
+        </PDFDownloadLink>
         <div className="flex justify-between items-center mt-5">
           <div className="flex justify-start items-center ml-8">
             <div className="bg-amber-200 text-amber-600 rounded-lg w-16 h-16 flex justify-center items-center text-xl">
