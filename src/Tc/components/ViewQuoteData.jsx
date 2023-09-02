@@ -303,7 +303,7 @@ function ViewQuoteData({ Data, RemindersFunction }) {
                         </div>
                         <div className="flex justify-center items-center my-3 flex-col">
                             <p className="text-gray-400 text-sm ">Expiry date</p>
-                            <p className="f01">{Data.location}</p>
+                            <p className="f01">{Data.expiry_date}</p>
                         </div>
                         <div className="flex justify-center items-center my-3 flex-col">
                             <p className="text-gray-400 text-sm ">Mobile 2</p>

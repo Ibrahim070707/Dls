@@ -5,6 +5,9 @@ import Reminders from "../components/Reminders";
 import TabButton from "../components/TabButton";
 import CustomLoader from "../components/CustomLoader";
 import QuoteGaneration from "../components/Tables/QuoteGaneration";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from "antd";
+
 
 const CaseList = ({ RemindersData }) => {
   const [loader, setloader] = useState(false);
@@ -39,9 +42,11 @@ const CaseList = ({ RemindersData }) => {
   const [Appointmentdata, setAppointmentdata] = useState([]);
   const [Convertdata, setConvertdata] = useState([]);
   const [Lostdata, setLostdata] = useState([]);
+  const [NumberCountLoader, setNumberCountLoader] = useState(false);
   const [SelectMonthId, setSelectMonthId] = useState(month + 1)
 
   useEffect(() => {
+    setNumberCountLoader(true)
     setloader(true);
     ApiFetch();
   }, []);
@@ -255,22 +260,23 @@ const CaseList = ({ RemindersData }) => {
       .catch((error) => console.log("error", error));
   };
   const handleMonthChnage = (id) => {
+    setNumberCountLoader(true)
     setActiveMonthTabNumber(id);
-    if (id === 0) {
-      GetDataCount(month, ActiveCasesType)
+    if (id == 0) {
+      GetDataCount(month)
       setSelectedMonth(month);
       setSelectMonthId(month)
-    } else if (id === 1) {
-      GetDataCount(month, ActiveCasesType)
+    } else if (id == 1) {
+      GetDataCount(month + 1)
       setSelectedMonth(month + 1);
       setSelectMonthId(month + 1)
     } else {
-      GetDataCount(month + 1, ActiveCasesType)
+      GetDataCount(month + 2)
       setSelectedMonth(month + 2);
       setSelectMonthId(month + 2)
     }
   };
-  const GetDataCount = (monthId, Type) => {
+  const GetDataCount = (monthId) => {
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Content-Type", "application/json");
@@ -299,12 +305,15 @@ const CaseList = ({ RemindersData }) => {
           Convert: result.Data.Convert,
           Lost: result.Data.Lost,
         });
+        setNumberCountLoader(false)
       })
       .catch(error => console.log('error', error));
   }
   const handleCaseType = (id) => {
     GetDataCount(SelectMonthId, id)
   }
+  const antIcon = <LoadingOutlined style={{ fontSize: 15 }} spin />;
+
 
   return (
     <div className="bg-gray-200" style={{ minHeight: "93vh" }}>
@@ -351,13 +360,13 @@ const CaseList = ({ RemindersData }) => {
             <div className="bg-white w-full gap-5 p-5 grid grid-cols-5 rounded-2xl shadow-md">
               <TabButton
                 Title="Connect"
-                number={TabsNumbersData.Connect ? TabsNumbersData.Connect : "0"}
+                number={NumberCountLoader ? <Spin indicator={antIcon} /> : TabsNumbersData.Connect ? TabsNumbersData.Connect : "0"}
                 Isactive={ActiveTabNumber === 1 ? true : false}
                 onclick={() => handleTabsChange(1)}
               />
               <TabButton
                 Title="Convience"
-                number={TabsNumbersData.Convience ? TabsNumbersData.Convience : "0"}
+                number={NumberCountLoader ? <Spin indicator={antIcon} /> : TabsNumbersData.Convience ? TabsNumbersData.Convience : "0"}
                 Isactive={ActiveTabNumber === 2 ? true : false}
                 onclick={() => handleTabsChange(2)}
               />
@@ -365,25 +374,27 @@ const CaseList = ({ RemindersData }) => {
                 TabsNumbersData.Convience ? TabsNumbersData.Convience : "0"
               }
                 Isactive={ActiveTabNumber === 3 ? true : false} onclick={() => handleTabsChange(3)} /> */}
+
               <TabButton
                 Title="Appointment"
                 number={
-                  TabsNumbersData.Appointment
-                    ? TabsNumbersData.Appointment
-                    : "0"
+                  NumberCountLoader ? <Spin indicator={antIcon} /> :
+                    TabsNumbersData.Appointment
+                      ? TabsNumbersData.Appointment
+                      : "0"
                 }
                 Isactive={ActiveTabNumber === 4 ? true : false}
                 onclick={() => handleTabsChange(4)}
               />
               <TabButton
                 Title="Convert"
-                number={TabsNumbersData.Convert ? TabsNumbersData.Convert : "0"}
+                number={NumberCountLoader ? <Spin indicator={antIcon} /> : TabsNumbersData.Convert ? TabsNumbersData.Convert : "0"}
                 Isactive={ActiveTabNumber === 5 ? true : false}
                 onclick={() => handleTabsChange(5)}
               />
               <TabButton
                 Title="Lost"
-                number={TabsNumbersData.Lost ? TabsNumbersData.Lost : "0"}
+                number={NumberCountLoader ? <Spin indicator={antIcon} /> : TabsNumbersData.Lost ? TabsNumbersData.Lost : "0"}
                 Isactive={ActiveTabNumber === 6 ? true : false}
                 onclick={() => handleTabsChange(6)}
               />

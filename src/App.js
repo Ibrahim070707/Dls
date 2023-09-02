@@ -172,7 +172,14 @@ const App = () => {
                         path="/BusinessReports"
                         element={<BranchBusinessReports />}
                       />
-                      <Route path="/CsrReports" element={<BranchCSRReport />} />
+                      <Route
+                        path="/CsrReports"
+                        element={
+                          <React.Suspense>
+                            <BranchCSRReport />
+                          </React.Suspense>
+                        }
+                      />
                       <Route path="*" element={<NonFound />} />
                     </Routes>
                   </div>
@@ -192,14 +199,18 @@ const App = () => {
                       color: "white",
                     }}
                   >
-                    <TCSidebar />
+                    <React.Suspense>
+                      <TCSidebar />
+                    </React.Suspense>
                   </div>
                 ) : (
                   <div
                     className="w-0 dark:bg-secondary-dark-bg"
                     style={{ transition: "0.5s" }}
                   >
-                    <TCSidebar />
+                    <React.Suspense>
+                      <TCSidebar />
+                    </React.Suspense>
                   </div>
                 )}
                 <div
@@ -210,19 +221,43 @@ const App = () => {
                   }
                 >
                   <div className="fixed md:static dark:bg-main-dark-bg navbar w-full ">
-                    <TCNavbar OnChangeState={ChangeState} />
+                    <React.Suspense>
+                      <TCNavbar OnChangeState={ChangeState} />
+                    </React.Suspense>
                   </div>
                   <div style={{ height: "auto" }}>
                     <Routes>
                       <Route
                         path="/"
-                        element={<TCDashboard RemindersData={RemindersData} />}
+                        element={
+                          <React.Suspense>
+                            <TCDashboard RemindersData={RemindersData} />
+                          </React.Suspense>
+                        }
                       />
-                      <Route path="/Timer" element={<TCTimer />} />
-                      <Route path="*" element={<NonFound />} />
+                      <Route
+                        path="/Timer"
+                        element={
+                          <React.Suspense>
+                            <TCTimer />
+                          </React.Suspense>
+                        }
+                      />
+                      <Route
+                        path="*"
+                        element={
+                          <React.Suspense>
+                            <NonFound />
+                          </React.Suspense>
+                        }
+                      />
                       <Route
                         path="/MyTask"
-                        element={<TCCaseList RemindersData={RemindersData} />}
+                        element={
+                          <React.Suspense>
+                            <TCCaseList RemindersData={RemindersData} />
+                          </React.Suspense>
+                        }
                       />
                       <Route
                         path="/MyLeads"
