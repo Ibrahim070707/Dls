@@ -66,7 +66,7 @@ function Appointment({ Data, RemindersFunction }) {
                         toast.success("Data Updated Successfully");
                         navigate("/MyTask");
                         RemindersFunction();
-                        AddReminder()
+                        AddReminder();
                     }
                     setloader(false);
                 })
@@ -79,7 +79,7 @@ function Appointment({ Data, RemindersFunction }) {
                         .then((response) => response.json())
                         .then((result) => {
                             if (result.Status === 200) {
-                                AddReminder()
+                                AddReminder();
                                 toast.success("Data Updated Successfully");
                                 navigate("/MyTask");
                                 RemindersFunction();
@@ -127,25 +127,24 @@ function Appointment({ Data, RemindersFunction }) {
         myHeaders.append("Authorization", `Bearer ${Token}`);
 
         var raw = JSON.stringify({
-            "case_id": Data.id,
-            "emp_id": UserData.id,
-            "date": FormData.reminder_date,
-            "time": FormData.reminder_time
+            case_id: Data.id,
+            emp_id: UserData.id,
+            date: FormData.reminder_date,
+            time: FormData.reminder_time,
         });
 
         var requestOptions = {
-            method: 'POST',
+            method: "POST",
             headers: myHeaders,
             body: raw,
-            redirect: 'follow'
+            redirect: "follow",
         };
 
         fetch(`${Base_Url}AddEmployeeReminders`, requestOptions)
-            .then(response => response.json())
-            .then(result => {
-            })
-            .catch(error => console.log('error', error));
-    }
+            .then((response) => response.json())
+            .then((result) => { })
+            .catch((error) => console.log("error", error));
+    };
 
     return (
         <>
@@ -799,54 +798,86 @@ function Appointment({ Data, RemindersFunction }) {
                                             <div className="grid grid-cols-3 mt-5 mx-5">
                                                 <div
                                                     className=" grid items-center"
-                                                    style={{ gridTemplateColumns: "27% auto" }} >
-                                                    <img src={MediaBase_Url + ol.QuoteImage} width="60px" />
+                                                    style={{ gridTemplateColumns: "27% auto" }}
+                                                >
+                                                    <img
+                                                        src={MediaBase_Url + ol.QuoteImage}
+                                                        width="60px"
+                                                    />
                                                     <div className="flex justify-center flex-col items-center text-sm">
                                                         <p className="font-semibold">{ol.QuoteName}</p>
                                                     </div>
                                                 </div>
                                                 <div className="flex justify-center flex-col items-center f02">
                                                     <p className="text-gray-400">Net Premium</p>
-                                                    <Input placeholder="Enter Net Discount" name="net_premium" type="number" readOnly value={ol.net_premium} />
+                                                    <Input
+                                                        placeholder="Enter Net Discount"
+                                                        name="net_premium"
+                                                        type="number"
+                                                        readOnly
+                                                        value={ol.net_premium}
+                                                    />
                                                 </div>
                                                 <div className="flex justify-center flex-col items-center  f02">
                                                     <p className="text-gray-400 ">Gross Premium</p>
                                                     <p>
-                                                        <Input placeholder="Enter Gross Premium" type="number" name="gross_premium" readOnly value={ol.gross_premium} />
+                                                        <Input
+                                                            placeholder="Enter Gross Premium"
+                                                            type="number"
+                                                            name="gross_premium"
+                                                            readOnly
+                                                            value={ol.gross_premium}
+                                                        />
                                                     </p>
                                                 </div>
                                             </div>
                                             <div className="grid grid-cols-4 mt-5 mx-5">
                                                 <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                                                    <p className="text-gray-500 f02">
-                                                        OD Rate
-                                                    </p>
+                                                    <p className="text-gray-500 f02">OD Rate</p>
                                                     <p className="text-gray-600 f02 font-semibold">
-                                                        <Input placeholder="Enter OD Rate" type="number" name="od_rate" readOnly value={ol.od_rate} />
+                                                        <Input
+                                                            placeholder="Enter OD Rate"
+                                                            type="number"
+                                                            name="od_rate"
+                                                            readOnly
+                                                            value={ol.od_rate}
+                                                        />
                                                     </p>
                                                 </div>
                                                 <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                                                    <p className="text-gray-500 f02">
-                                                        ADDON Rate
-                                                    </p>
+                                                    <p className="text-gray-500 f02">ADDON Rate</p>
                                                     <p className="text-gray-600 f02 font-semibold">
-                                                        <Input placeholder="Enter ADDON Rate" type="number" name="addon_rate" readOnly value={ol.addon_rate} />
+                                                        <Input
+                                                            placeholder="Enter ADDON Rate"
+                                                            type="number"
+                                                            name="addon_rate"
+                                                            readOnly
+                                                            value={ol.addon_rate}
+                                                        />
                                                     </p>
                                                 </div>
                                                 <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                                                    <p className="text-gray-500 f02">
-                                                        TP Rate
-                                                    </p>
+                                                    <p className="text-gray-500 f02">TP Rate</p>
                                                     <p className="text-gray-600 f02 font-semibold">
-                                                        <Input placeholder="Enter TP Rate" type="number" name="tp_rate" readOnly value={ol.tp_rate} />
+                                                        <Input
+                                                            placeholder="Enter TP Rate"
+                                                            type="number"
+                                                            name="tp_rate"
+                                                            readOnly
+                                                            value={ol.tp_rate}
+                                                        />
                                                     </p>
                                                 </div>
                                                 <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center ">
-                                                    <p className="text-gray-500 f02">
-                                                        Tariff Discount %
-                                                    </p>
+                                                    <p className="text-gray-500 f02">Tariff Discount %</p>
                                                     <p className="text-gray-600 f02 font-semibold">
-                                                        <Input placeholder="Enter Tariff Discount" type="number" name="tariif_descount" readOnly value={ol.tariif_descount} />
+                                                        <Input
+                                                            placeholder="Enter Tariff Discount"
+                                                            type="number"
+                                                            name="tariif_descount"
+                                                            readOnly
+                                                            value={ol.tariif_descount}
+                                                        />
                                                     </p>
                                                 </div>
                                             </div>
@@ -899,7 +930,6 @@ function Appointment({ Data, RemindersFunction }) {
                                     >
                                         Select Status
                                     </option>
-
                                     {Status == "Lost" ? (
                                         <>
                                             <option
@@ -957,7 +987,12 @@ function Appointment({ Data, RemindersFunction }) {
                                                 Already Renewed
                                             </option>
                                         </>
-                                    ) : null}
+                                    ) : (<option
+                                        className="text-gray-400 font-extralight"
+                                        value="Done"
+                                    >
+                                        Done
+                                    </option>)}
                                 </select>
                             </div>
                             <div className="flex justify-center items-center my-3 flex-col mx-5">
@@ -975,78 +1010,22 @@ function Appointment({ Data, RemindersFunction }) {
                                     className="appearance-none block bg-white text-gray-700 border border-gray-200 rounded-xl py-1 px-1 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-black placeholder:text-sm "
                                 />
                             </div>
-                            {NextButton ? (
-                                <>
-                                    <div className="flex justify-center items-center my-3 flex-col mx-5">
-                                        <p className="text-gray-400 text-sm ">Case Status</p>
-                                        <input
-                                            style={{
-                                                borderRadius: "5px",
-                                                width: "100%",
-                                            }}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...FormData,
-                                                    ["Case_Status"]: e.target.value,
-                                                })
-                                            }
-                                            placeholder="Enter Case Status"
-                                            type="text"
-                                            className="appearance-none block bg-white text-gray-700 border border-gray-200 rounded-xl py-1 px-1 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-black placeholder:text-sm "
-                                        />
-                                    </div>
-                                    <div className="flex justify-center items-center my-3 flex-col mx-5">
-                                        <p className="text-gray-400 text-sm ">Payment Details</p>
-                                        <input
-                                            style={{
-                                                borderRadius: "5px",
-                                                width: "100%",
-                                            }}
-                                            onChange={(e) =>
-                                                setFormData({
-                                                    ...FormData,
-                                                    ["Payment_Details"]: e.target.value,
-                                                })
-                                            }
-                                            placeholder="Enter Payment Details"
-                                            type="text"
-                                            className="appearance-none block bg-white text-gray-700 border border-gray-200 rounded-xl py-1 px-1 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-black placeholder:text-sm "
-                                        />
-                                    </div>
-                                </>
-                            ) : (
-                                ""
-                            )}
                         </div>
-                        {NextButton === false ? (
-                            <div className="mt-6 mb-8 flex justify-center items-center gap-5">
-                                <CustomButton
-                                    type={1}
-                                    Onclick={() => navigate("/MyTask")}
-                                    Title="Go Back"
-                                    BgColor="#2ab86a"
-                                />
-                                <CustomButton
-                                    type={1}
-                                    Onclick={() => setNextButton(true)}
-                                    Title="Next"
-                                    BgColor="#2ab86a"
-                                />
-                            </div>
-                        ) : (
-                            <div className="mt-6 mb-8 flex justify-center items-center gap-5">
-                                <CustomButton
-                                    type={1}
-                                    Onclick={() => navigate("/MyTask")}
-                                    Title="Go Back"
-                                    BgColor="#2ab86a" />
-                                <CustomButton
-                                    type={1}
-                                    Onclick={handleOnSubmit}
-                                    Title="Save"
-                                    BgColor="#2ab86a" />
-                            </div>
-                        )}
+
+                        <div className="mt-6 mb-8 flex justify-center items-center gap-5">
+                            <CustomButton
+                                type={1}
+                                Onclick={() => navigate("/MyTask")}
+                                Title="Go Back"
+                                BgColor="#2ab86a"
+                            />
+                            <CustomButton
+                                type={1}
+                                Onclick={handleOnSubmit}
+                                Title="Save"
+                                BgColor="#2ab86a"
+                            />
+                        </div>
                     </div>
                 </div>
             )}

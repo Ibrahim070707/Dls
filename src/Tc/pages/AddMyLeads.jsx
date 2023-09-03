@@ -356,40 +356,6 @@ const AddMyLeads = () => {
                                     </select>
                                 </div>
                                 <div>
-                                    <Label label="Seating Capacity" />
-                                    <Input
-
-                                        placeholder="Enter Seating Capacity"
-                                        type="number"
-                                        onChange={(e) => {
-                                            setFormData({
-                                                ...FormData,
-                                                ["seating_capacity"]: e.target.value,
-                                            });
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <Label label="CC_GVW" />
-                                    <Input
-
-                                        placeholder="Enter CC_GVW"
-                                        onChange={(e) => {
-                                            setFormData({ ...FormData, ["CC_GVW"]: e.target.value });
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <Label label="Zone" />
-                                    <Input
-
-                                        placeholder="Enter Zone"
-                                        onChange={(e) => {
-                                            setFormData({ ...FormData, ["zone"]: e.target.value });
-                                        }}
-                                    />
-                                </div>
-                                <div>
                                     <Label label="Location" />
                                     <Input
 
@@ -399,76 +365,6 @@ const AddMyLeads = () => {
                                                 ...FormData,
                                                 ["location"]: e.target.value,
                                             });
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <Label label="IDV" />
-                                    <Input
-
-                                        placeholder="Enter IDV"
-                                        onChange={(e) => {
-                                            setFormData({ ...FormData, ["IDV"]: e.target.value });
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <Label label="Registration Date" />
-                                    <Input
-
-                                        placeholder="Enter Registration Date"
-                                        onChange={(e) => {
-                                            setFormData({
-                                                ...FormData,
-                                                ["Registration_date"]: e.target.value,
-                                            });
-                                        }}
-                                        type="date"
-                                    />
-                                </div>
-                                <div>
-                                    <Label label="Previous Policy Type" />
-                                    <select
-                                        className="bg-white border text-gray-400 border-gray-200 f01 rounded focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
-                                        onChange={(e) => {
-                                            setFormData({ ...FormData, ["previous_policy_type"]: e.target.value });
-                                        }}
-                                        placeholder="Select Model"
-
-                                    >
-                                        <option className="text-gray-400 font-bold" disabled selected>
-                                            Select Previous Policy Type
-                                        </option>
-                                        <option value="Comprehensive" className="text-black font-bold">
-                                            Comprehensive
-                                        </option>
-                                        <option value="Third Party" className="text-black font-bold">
-                                            Third Party
-                                        </option>
-                                        <option value="No Policy" className="text-black font-bold">
-                                            No Policy
-                                        </option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <Label label="Sub Model" />
-                                    <Input
-                                        placeholder="Enter Sub Model"
-                                        onChange={(e) => {
-                                            setFormData({
-                                                ...FormData,
-                                                ["sub_model"]: e.target.value,
-                                            });
-                                        }}
-                                    />
-                                </div>
-                                <div>
-                                    <Label label="RTO" />
-                                    <Input
-
-                                        placeholder="Enter RTO"
-                                        onChange={(e) => {
-                                            setFormData({ ...FormData, ["RTO"]: e.target.value });
                                         }}
                                     />
                                 </div>
@@ -672,6 +568,114 @@ const AddMyLeads = () => {
                                         }}
                                     />
                                 </div>
+                                {/* <div>
+                                    <Label label="Seating Capacity" />
+                                    <Input
+
+                                        placeholder="Enter Seating Capacity"
+                                        type="number"
+                                        onChange={(e) => {
+                                            setFormData({
+                                                ...FormData,
+                                                ["seating_capacity"]: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <Label label="CC_GVW" />
+                                    <Input
+
+                                        placeholder="Enter CC_GVW"
+                                        onChange={(e) => {
+                                            setFormData({ ...FormData, ["CC_GVW"]: e.target.value });
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <Label label="Zone" />
+                                    <Input
+
+                                        placeholder="Enter Zone"
+                                        onChange={(e) => {
+                                            setFormData({ ...FormData, ["zone"]: e.target.value });
+                                        }}
+                                    />
+                                </div>
+                            
+                                <div>
+                                    <Label label="IDV" />
+                                    <Input
+
+                                        placeholder="Enter IDV"
+                                        onChange={(e) => {
+                                            setFormData({ ...FormData, ["IDV"]: e.target.value });
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <Label label="Registration Date" />
+                                    <Input
+
+                                        placeholder="Enter Registration Date"
+                                        onChange={(e) => {
+                                            setFormData({
+                                                ...FormData,
+                                                ["Registration_date"]: e.target.value,
+                                            });
+                                        }}
+                                        type="date"
+                                    />
+                                </div>
+                                <div>
+                                    <Label label="Previous Policy Type" />
+                                    <select
+                                        className="bg-white border text-gray-400 border-gray-200 f01 rounded focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight"
+                                        onChange={(e) => {
+                                            setFormData({ ...FormData, ["previous_policy_type"]: e.target.value });
+                                        }}
+                                        placeholder="Select Model"
+
+                                    >
+                                        <option className="text-gray-400 font-bold" disabled selected>
+                                            Select Previous Policy Type
+                                        </option>
+                                        <option value="Comprehensive" className="text-black font-bold">
+                                            Comprehensive
+                                        </option>
+                                        <option value="Third Party" className="text-black font-bold">
+                                            Third Party
+                                        </option>
+                                        <option value="No Policy" className="text-black font-bold">
+                                            No Policy
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <Label label="Sub Model" />
+                                    <Input
+                                        placeholder="Enter Sub Model"
+                                        onChange={(e) => {
+                                            setFormData({
+                                                ...FormData,
+                                                ["sub_model"]: e.target.value,
+                                            });
+                                        }}
+                                    />
+                                </div>
+                                <div>
+                                    <Label label="RTO" />
+                                    <Input
+
+                                        placeholder="Enter RTO"
+                                        onChange={(e) => {
+                                            setFormData({ ...FormData, ["RTO"]: e.target.value });
+                                        }}
+                                    />
+                                </div>
+                            
+                               
+                            
                                 <div>
                                     <Label label="New Policy Type" />
                                     <Input
@@ -709,7 +713,7 @@ const AddMyLeads = () => {
                                         }}
                                         type="date"
                                     />
-                                </div>
+                                </div> */}
                             </div>
                             <div className="flex mt-5 gap-5 justify-center">
                                 <CustomButton

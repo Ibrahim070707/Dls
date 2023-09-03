@@ -6,6 +6,7 @@ import { Input, Modal } from "antd";
 import CustomButton from "../components/AddProductForm/CustomButton";
 import CustomLoader from "../components/CustomLoader";
 import { toast } from "react-hot-toast";
+// import printJS from 'print-js';
 
 function EmployeePayroll() {
     const { id } = useParams();
@@ -33,11 +34,11 @@ function EmployeePayroll() {
             redirect: "follow",
         };
 
-        fetch(`${Base_Url}getEployeeByID/${id}`, requestOptions)
+        fetch(`${Base_Url}get/Employee/${id}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 if (result.Status === 200) {
-                    setData(result.data);
+                    setData(result.Data);
                     setloader(false);
                 }
             })
@@ -129,6 +130,11 @@ function EmployeePayroll() {
             pan_number: FormData.pan_number,
             account_number: FormData.account_number,
             salary: FormData.salary,
+            basic_salary: FormData.basic_salary,
+            house_allowances: FormData.house_allowances,
+            conveyance_allowances: FormData.conveyance_allowances,
+            medical_allowances: FormData.medical_allowances,
+            special_allowances: FormData.special_allowances,
         });
 
         var requestOptions = {
@@ -163,6 +169,11 @@ function EmployeePayroll() {
             pan_number: FormData.pan_number,
             account_number: FormData.account_number,
             salary: FormData.salary,
+            basic_salary: FormData.basic_salary,
+            house_allowances: FormData.house_allowances,
+            conveyance_allowances: FormData.conveyance_allowances,
+            medical_allowances: FormData.medical_allowances,
+            special_allowances: FormData.special_allowances,
         });
 
         var requestOptions = {
@@ -210,6 +221,17 @@ function EmployeePayroll() {
             .catch(error => console.log('error', error));
     }
 
+
+    // const handlePrint = () => {
+    //     const contentToPrint = document.getElementById('content-to-print');
+    //     const printOptions = {
+    //         printable: contentToPrint.innerHTML,
+    //         type: 'html',
+    //     };
+    //     printJS(printOptions);
+    // };
+
+
     return (
         <>
             {loader ? (
@@ -240,7 +262,7 @@ function EmployeePayroll() {
                                     type="text"
                                     className="font-semibold"
                                     name="branchName"
-                                    value={Data.employee_id}
+                                    value={Data?.employee_id}
                                 />
                             </div>
                             {/* first name */}
@@ -325,84 +347,15 @@ function EmployeePayroll() {
                                     />
                                 </div>
                             </div>
-                            <div>
-                                <Label label="Bank Name" />
-                                <div className="date-picker">
 
-                                    <input
-                                        className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
-                                        id="bank_name"
-                                        defaultValue={BankData.bank_name}
-                                        placeholder="Enter Bank Name"
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...FormData,
-                                                ["bank_name"]: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <Label label="Pan Card Number" />
-                                <div className="date-picker">
-                                    <input
-                                        className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
-                                        id="pan_number"
-                                        placeholder="Enter Pan Card Number"
-
-                                        defaultValue={BankData.pan_number}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...FormData,
-                                                ["pan_number"]: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <Label label="Bank Account Number" />
-                                <div className="date-picker">
-
-                                    <input
-                                        className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
-                                        id="account_number"
-                                        placeholder="Enter Bank Account Number"
-                                        defaultValue={BankData.account_number}
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...FormData,
-                                                ["account_number"]: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div>
-                            <div>
-                                <Label label="Monthly Salary" />
-                                <div className="date-picker">
-                                    <input
-                                        className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
-                                        id="salary"
-                                        defaultValue={BankData.salary}
-                                        placeholder="Enter Monthly Salary"
-                                        onChange={(e) =>
-                                            setFormData({
-                                                ...FormData,
-                                                ["salary"]: e.target.value,
-                                            })
-                                        }
-                                    />
-                                </div>
-                            </div>
                             <div>
                                 <Label label="Total Salary Till Now" />
                                 <div className="date-picker">
                                     <input
                                         className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
                                         id="salary"
-                                        defaultValue={EmployeeTime.Salary}
+                                        value={EmployeeTime.Salary}
+                                        readOnly
                                         placeholder="Enter Monthly Salary"
                                     />
                                 </div>
@@ -410,7 +363,171 @@ function EmployeePayroll() {
                             <div>
                                 <p onClick={() => setShowMonthlyReport(true)} className="text-sm font-semibold cursor-pointer mt-[1.6rem]" >Click Here To View Monthly</p>
                             </div>
+
                         </div>
+                        <div id="pdf-content" className="bg-white rounded-lg mx-5" >
+                            <div className="grid grid-cols-2 mx-5 gap-5">
+                                <div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Employee Name</p>
+                                        <p className="f02">{Data.first_name + " " + Data.last_name}</p>
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">EmployeeID</p>
+                                        <p className="f02">{Data?.employee_id}</p>
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Department</p>
+                                        <p className="f02">{Data?.Branch?.employee_id}</p>
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Date Of Joining</p>
+                                        <p className="f02">{Data.date_of_joining}</p>
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Gross Salary</p>
+                                        <input
+                                            className="border f01 px-3 py-1"
+                                            id="salary"
+                                            defaultValue={BankData.salary}
+                                            placeholder="Enter Monthly Salary"
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...FormData,
+                                                    ["salary"]: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Bank Name</p>
+                                        <input
+                                            className="border f01 px-3 py-1"
+                                            id="bank_name"
+                                            defaultValue={BankData.bank_name}
+                                            placeholder="Enter Bank Name"
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...FormData,
+                                                    ["bank_name"]: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Bank A/c No</p>
+                                        <input
+                                            className="border f01 px-3 py-1"
+                                            id="account_number"
+                                            placeholder="Enter Bank Account Number"
+                                            defaultValue={BankData.account_number}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...FormData,
+                                                    ["account_number"]: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Pan Card Number</p>
+                                        <input
+                                            className="border f01 px-3 py-1"
+                                            id="pan_number"
+                                            placeholder="Enter Pan Card Number"
+
+                                            defaultValue={BankData.pan_number}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...FormData,
+                                                    ["pan_number"]: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Total Working Days</p>
+                                        <p className="f02">{0}</p>
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Paid Days</p>
+                                        <p className="f02">{0}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="h-[1px] bg-black mx-5" />
+                            <div className="grid grid-cols-1 mx-5 gap-5">
+                                <div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Basic Salary</p>
+                                        <input type="text" value={BankData.basic_salary} placeholder="Enter Basic Salary" className="border f01 px-3 py-1" onChange={(e) =>
+                                            setFormData({
+                                                ...FormData,
+                                                ["basic_salary"]: e.target.value,
+                                            })
+                                        } />
+
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">House Rent Allowances</p>
+                                        <input type="text" placeholder="Enter House Rent Allowances" className="border f01 px-3 py-1"
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...FormData,
+                                                    ["house_allowances"]: e.target.value,
+                                                })
+                                            }
+                                            value={BankData.house_allowances}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Conveyance Allowances</p>
+                                        <input type="text" onChange={(e) =>
+                                            setFormData({
+                                                ...FormData,
+                                                ["conveyance_allowances"]: e.target.value,
+                                            })
+                                        } placeholder="Enter Conveyance Allowances" className="border f01 px-3 py-1" value={BankData.conveyance_allowances}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Medical Allowances</p>
+                                        <input type="text" placeholder="Enter Medical Allowances" className="border f01 px-3 py-1" onChange={(e) =>
+                                            setFormData({
+                                                ...FormData,
+                                                ["medical_allowances"]: e.target.value,
+                                            })
+
+                                        }
+                                            value={BankData.medical_allowances}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Special Allowances</p>
+                                        <input type="text" placeholder="Enter Special Allowances" className="border f01 px-3 py-1" onChange={(e) =>
+                                            setFormData({
+                                                ...FormData,
+                                                ["special_allowances"]: e.target.value,
+                                            })
+                                        }
+                                            value={BankData.special_allowances}
+                                        />
+                                    </div>
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Gross Salary</p>
+                                        <p className="f02">{BankData.salary}</p>
+                                    </div>
+                                    <div className="h-[1px] bg-black " />
+                                    <div className="flex justify-between items-center my-2">
+                                        <p className="f02">Net Salary:</p>
+                                        <p className="f02">{BankData.salary}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <button onClick={handlePrint}>Print</button> */}
                         <div className="flex justify-center items-center mt-6 mb-3">
                             {Object.keys(BankData).length === 0 ? (
                                 <CustomButton

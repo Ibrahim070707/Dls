@@ -133,7 +133,7 @@ const BranchDashboard = () => {
     GetSalesData();
     setTimeout(() => {
       setShowStacked(true);
-    }, 1500);
+    }, 2000);
     setTimeout(() => {
       setIsFirstTime(false);
     }, 10000);

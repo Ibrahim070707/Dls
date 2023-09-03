@@ -267,17 +267,47 @@ const App = () => {
                           </React.Suspense>
                         }
                       />
-                      <Route path="/AddMyLeads" element={<TCAddMyLeads />} />
-                      <Route path="/MyProfile" element={<TCMyProfile />} />
-                      <Route path="/PayRoll" element={<PayRoll />} />
-                      <Route path="/PdfDonwload" element={<PdfDonwload />} />
+                      <Route
+                        path="/AddMyLeads"
+                        element={
+                          <React.Suspense>
+                            <TCAddMyLeads />
+                          </React.Suspense>
+                        }
+                      />
+                      <Route
+                        path="/MyProfile"
+                        element={
+                          <React.Suspense>
+                            <TCMyProfile />
+                          </React.Suspense>
+                        }
+                      />
+                      <Route
+                        path="/PayRoll"
+                        element={
+                          <React.Suspense>
+                            <PayRoll />
+                          </React.Suspense>
+                        }
+                      />
+                      <Route
+                        path="/PdfDonwload"
+                        element={
+                          <React.Suspense>
+                            <PdfDonwload />
+                          </React.Suspense>
+                        }
+                      />
                       <Route
                         path="/ViewCaseDetails/:id"
                         element={
-                          <TCViewCaseDetails
-                            GetRemindersData={GetRemindersData}
-                            RemindersData={RemindersData}
-                          />
+                          <React.Suspense>
+                            <TCViewCaseDetails
+                              GetRemindersData={GetRemindersData}
+                              RemindersData={RemindersData}
+                            />
+                          </React.Suspense>
                         }
                       />
                     </Routes>
@@ -343,7 +373,14 @@ const App = () => {
           )
         ) : (
           <Routes>
-            <Route path="/" element={<Login setLoginValid={ChangeState} />} />
+            <Route
+              path="/"
+              element={
+                <React.Suspense>
+                  <Login setLoginValid={ChangeState} />
+                </React.Suspense>
+              }
+            />
           </Routes>
         )}
       </BrowserRouter>

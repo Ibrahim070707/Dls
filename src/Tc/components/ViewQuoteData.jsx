@@ -11,6 +11,7 @@ import CustomLoader from './CustomLoader';
 
 
 function ViewQuoteData({ Data, RemindersFunction }) {
+    console.log("Data", Data);
     const Token = localStorage.getItem("token");
     const { Base_Url, MediaBase_Url } = useStateContext();
     const [SelectedQuote, setSelectedQuote] = useState("")
@@ -852,13 +853,23 @@ function ViewQuoteData({ Data, RemindersFunction }) {
                                     className="bg border text-gray-400 border-gray-200 font-extralight text-sm rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-1 px-1 mb-3 leading-tight"
                                     onChange={(e) => setStatus(e.target.value)}
                                 >
-                                    <option
-                                        className="text-gray-400 font-extralight"
-                                        selected
-                                        disabled
-                                    >
-                                        Select Status
-                                    </option>
+                                    {
+                                        Data.Allocation_Sub_Sub_Status ?
+                                            <option
+                                                className="text-gray-400 font-extralight"
+                                                selected
+                                                value={Data.Allocation_Sub_Sub_Status}
+                                            >
+                                                {Data.Allocation_Sub_Sub_Status}
+                                            </option> :
+                                            <option
+                                                className="text-gray-400 font-extralight"
+                                                selected
+                                                disabled
+                                            >
+                                                Select Status
+                                            </option>
+                                    }
                                     <option
                                         className="text-gray-400 font-extralight"
                                         value="QUOTE Explained"
@@ -887,13 +898,23 @@ function ViewQuoteData({ Data, RemindersFunction }) {
                                     className="bg border text-gray-400 border-gray-200 font-extralight f02rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-1 px-1 mb-3 leading-tight"
                                     onChange={(e) => setSubStatus(e.target.value)}
                                 >
-                                    <option
-                                        className="text-gray-400 font-extralight"
-                                        selected
-                                        disabled
-                                    >
-                                        Select Status
-                                    </option>
+                                    {
+                                        Data.Allocation_Sub_Sub_Status ?
+                                            <option
+                                                className="text-gray-400 font-extralight"
+                                                selected
+                                                value={Data.Allocation_Sub_Sub_Status}
+                                            >
+                                                {Data.Allocation_Sub_Sub_Status}
+                                            </option> :
+                                            <option
+                                                className="text-gray-400 font-extralight"
+                                                selected
+                                                disabled
+                                            >
+                                                Select Status
+                                            </option>
+                                    }
                                     {
                                         Status == "CONVINCE" ?
                                             <>
@@ -988,7 +1009,7 @@ function ViewQuoteData({ Data, RemindersFunction }) {
                                         borderRadius: "5px",
                                         width: "100%",
                                     }}
-                                    defaultValue={Data.remark}
+                                    defaultValue={Data.Allocation_Remarks}
                                     placeholder='Enter Remarks If Any'
                                     className="appearance-none block bg-white text-gray-700 border border-gray-200 rounded-xl py-1 px-1 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-black placeholder:text-sm "
                                     type="text"

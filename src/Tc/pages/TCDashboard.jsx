@@ -109,7 +109,7 @@ const TCDashboard = ({ RemindersData }) => {
     setloader(true)
     setTimeout(() => {
       setShowStacked(true);
-    }, 1500);
+    }, 2000);
 
   }, []);
   const DashboardStatsData = [

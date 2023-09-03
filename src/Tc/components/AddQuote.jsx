@@ -4,17 +4,21 @@ import { BsTelephoneForward } from "react-icons/bs";
 import { FaEnvelope, FaSlash } from "react-icons/fa";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+
 import { Toaster, toast } from "react-hot-toast";
 
 import { useNavigate } from "react-router-dom";
 
 function AddQuote({ Data, RemindersFunction }) {
+
   const [ShowQuote, setShowQuote] = useState(true);
   const Token = localStorage.getItem("token");
   const [Quotedata, setQuotedata] = useState([]);
   const { Base_Url, MediaBase_Url } = useStateContext();
   const UserData = JSON.parse(localStorage.getItem("data"));
   const [selectedValues, setSelectedValues] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const [ButtonEnabled, setButtonEnabled] = useState(false);
   const [IsOdOnly, setIsOdOnly] = useState("");
@@ -126,10 +130,9 @@ function AddQuote({ Data, RemindersFunction }) {
         .then((response) => response.json())
         .then((result) => {
           if (result.Status === 200) {
+            RemindersFunction();
             toast.success("Quote Ganerated Successfully");
             navigate("/MyTask");
-            RemindersFunction();
-            // window.print()
           }
         })
         .catch((error) => console.log("error", error));
@@ -236,14 +239,9 @@ function AddQuote({ Data, RemindersFunction }) {
       })
       .catch(error => console.log('error', error));
   }
-
-
-
-
-
-
-
-
+  const filteredData = Quotedata.filter((Quote) =>
+    Quote.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   // Create PDF component
 
   const generateAndDownloadPDF = () => {
@@ -969,13 +967,23 @@ function AddQuote({ Data, RemindersFunction }) {
                     })
                   }
                 >
-                  <option
-                    className="text-gray-400 font-extralight"
-                    selected
-                    disabled
-                  >
-                    Select Status
-                  </option>
+                  {
+                    Data.Allocation_status ?
+                      <option
+                        className="text-gray-400 font-extralight"
+                        selected
+                        value={Data.Allocation_status}
+                      >
+                        {Data.Allocation_status}
+                      </option> :
+                      <option
+                        className="text-gray-400 font-extralight"
+                        selected
+                        disabled
+                      >
+                        Select Status
+                      </option>
+                  }
                   <option
                     className="text-gray-400 font-extralight"
                     value="CallBack"
@@ -1015,13 +1023,23 @@ function AddQuote({ Data, RemindersFunction }) {
                     })
                   }
                 >
-                  <option
-                    className="text-gray-400 font-extralight"
-                    selected
-                    disabled
-                  >
-                    Select Status
-                  </option>
+                  {
+                    Data.Allocation_Sub_Sub_Status ?
+                      <option
+                        className="text-gray-400 font-extralight"
+                        selected
+                        value={Data.Allocation_Sub_Sub_Status}
+                      >
+                        {Data.Allocation_Sub_Sub_Status}
+                      </option> :
+                      <option
+                        className="text-gray-400 font-extralight"
+                        selected
+                        disabled
+                      >
+                        Select Status
+                      </option>
+                  }
                   {ApiFormData.Allocation_Status == "CallBack" ? (
                     <>
                       <option
@@ -1127,7 +1145,15 @@ function AddQuote({ Data, RemindersFunction }) {
                         Switched Off
                       </option>
                     </>
-                  ) : null}
+                  ) : (
+                    <option
+                      className="text-gray-400 font-extralight"
+                      value="Done"
+                    >
+                      Done
+                    </option>
+                  )
+                  }
                 </select>
               </div>
               <div className="flex justify-center items-center my-3 flex-col">
@@ -1137,6 +1163,7 @@ function AddQuote({ Data, RemindersFunction }) {
                     borderRadius: "5px",
                     width: "100%",
                   }}
+                  defaultValue={Data.Allocation_Remarks}
                   onChange={(e) =>
                     setApiFormData({
                       ...ApiFormData,
@@ -1174,83 +1201,94 @@ function AddQuote({ Data, RemindersFunction }) {
               className="mt-9 rounded-2xl w-full mb-2"
               style={{ height: "auto" }}
             >
-              {Quotedata &&
-                Quotedata.map((el, index) => {
-                  const quote_id = el.id;
-                  const dataIndex = QuoteIdsRef.current.indexOf(quote_id);
-                  return (
-                    <div className="bg-white rounded-2xl p-3 mb-2" key={index}>
-                      <div className="mb-2">
-                        <input
-                          type="checkbox"
-                          value={el.id}
-                          onChange={handleSelectCheckbox}
-                          className="float-right mr-5"
-                          style={{ width: "20px", height: "20px" }}
-                          checked={QuoteIdsRef.current.includes(el.id) ? true : false}
-                          readOnly
-                        />
-                        <div className="grid grid-cols-3 mt-5 mx-5">
-                          <div
-                            className=" grid items-center"
-                            style={{ gridTemplateColumns: "27% auto" }} >
-                            <img src={MediaBase_Url + el.image} width="60px" />
-                            <div className="flex justify-center flex-col items-center text-sm">
-                              <p className="font-semibold">{el.title}</p>
+              <div className="px-5 w-full">
+                <Input
+                  placeholder="Search Insurer Name Here"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  suffix={<SearchOutlined />}
+                  className="px-5 py-1 f03 font-semibold"
+                />
+              </div>
+              <div className="h-[230px] overflow-y-scroll">
+                {filteredData &&
+                  filteredData.map((el, index) => {
+                    const quote_id = el.id;
+                    const dataIndex = QuoteIdsRef.current.indexOf(quote_id);
+                    return (
+                      <div className="bg-white rounded-2xl p-3 mb-2" key={index}>
+                        <div className="mb-2">
+                          <input
+                            type="checkbox"
+                            value={el.id}
+                            onChange={handleSelectCheckbox}
+                            className="float-right mr-5"
+                            style={{ width: "20px", height: "20px" }}
+                            checked={QuoteIdsRef.current.includes(el.id) ? true : false}
+                            readOnly
+                          />
+                          <div className="grid grid-cols-3 mt-5 mx-5">
+                            <div
+                              className=" grid items-center"
+                              style={{ gridTemplateColumns: "27% auto" }} >
+                              <img src={MediaBase_Url + el.image} width="60px" />
+                              <div className="flex justify-center flex-col items-center text-sm">
+                                <p className="font-semibold">{el.title}</p>
+                              </div>
+                            </div>
+                            <div className="flex justify-center flex-col items-center f02">
+                              <p className="text-gray-400">Net Premium</p>
+                              <Input placeholder="Enter Net Discount" name="net_premium" type="number"
+                                onChange={(e) => handleOnChange(dataIndex, e, el.id)}
+                              />
+                            </div>
+                            <div className="flex justify-center flex-col items-center  f02">
+                              <p className="text-gray-400 ">Gross Premium</p>
+                              <p>
+                                <Input placeholder="Enter Gross Premium" type="number" name="gross_premium" onChange={(e) => handleOnChange(dataIndex, e, el.id)}
+                                />
+                              </p>
                             </div>
                           </div>
-                          <div className="flex justify-center flex-col items-center f02">
-                            <p className="text-gray-400">Net Premium</p>
-                            <Input placeholder="Enter Net Discount" name="net_premium" type="number"
-                              onChange={(e) => handleOnChange(dataIndex, e, el.id)}
-                            />
-                          </div>
-                          <div className="flex justify-center flex-col items-center  f02">
-                            <p className="text-gray-400 ">Gross Premium</p>
-                            <p>
-                              <Input placeholder="Enter Gross Premium" type="number" name="gross_premium" onChange={(e) => handleOnChange(dataIndex, e, el.id)}
-                              />
-                            </p>
-                          </div>
-                        </div>
-                        <div className="grid grid-cols-4 mt-5 mx-5">
-                          <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                            <p className="text-gray-500 f02">
-                              OD Rate
-                            </p>
-                            <p className="text-gray-600 f02 font-semibold">
-                              <Input placeholder="Enter OD Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="od_rate" />
-                            </p>
-                          </div>
-                          <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                            <p className="text-gray-500 f02">
-                              ADDON Rate
-                            </p>
-                            <p className="text-gray-600 f02 font-semibold">
-                              <Input placeholder="Enter ADDON Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="addon_rate" />
-                            </p>
-                          </div>
-                          <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                            <p className="text-gray-500 f02">
-                              TP Rate
-                            </p>
-                            <p className="text-gray-600 f02 font-semibold">
-                              <Input placeholder="Enter TP Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="tp_rate" />
-                            </p>
-                          </div>
-                          <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center ">
-                            <p className="text-gray-500 f02">
-                              Tariff Discount %
-                            </p>
-                            <p className="text-gray-600 f02 font-semibold">
-                              <Input placeholder="Enter Tariff Discount" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="tariif_descount" />
-                            </p>
+                          <div className="grid grid-cols-4 mt-5 mx-5">
+                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
+                              <p className="text-gray-500 f02">
+                                OD Rate
+                              </p>
+                              <p className="text-gray-600 f02 font-semibold">
+                                <Input placeholder="Enter OD Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="od_rate" />
+                              </p>
+                            </div>
+                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
+                              <p className="text-gray-500 f02">
+                                ADDON Rate
+                              </p>
+                              <p className="text-gray-600 f02 font-semibold">
+                                <Input placeholder="Enter ADDON Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="addon_rate" />
+                              </p>
+                            </div>
+                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
+                              <p className="text-gray-500 f02">
+                                TP Rate
+                              </p>
+                              <p className="text-gray-600 f02 font-semibold">
+                                <Input placeholder="Enter TP Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="tp_rate" />
+                              </p>
+                            </div>
+                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center ">
+                              <p className="text-gray-500 f02">
+                                Tariff Discount %
+                              </p>
+                              <p className="text-gray-600 f02 font-semibold">
+                                <Input placeholder="Enter Tariff Discount" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="tariif_descount" />
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
               <div className="grid grid-cols-3 mt-1 mx-3 gap-5 mb-5">
                 <div className="flex justify-center items-center my-3 flex-col">
                   <p className="text-gray-400 f02">Status</p>

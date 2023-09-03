@@ -67,8 +67,12 @@ function MyProfile() {
                     <div className="p-5 m-5 rounded-2xl bg-slate-200">
                         <div className="flex flex-col gap-5">
                             <div className="grid gap-4" style={{ gridTemplateColumns: "28% auto" }}>
-                                <div>
-                                    <img src={MediaBase_Url + Data.photo} alt="" width="300px" />
+                                <div >
+                                    <img src={MediaBase_Url + Data.photo} alt="" style={{
+                                        width: '100%', /* Set a fixed width for the container */
+                                        height: '250px', /* Set a fixed height for the container */
+                                        objectFit: 'contain'
+                                    }} />
                                 </div>
                                 <div className="grid grid-cols-2 gap-5 mt-5">
                                     <div>

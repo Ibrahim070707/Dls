@@ -4,9 +4,12 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import Label from "../components/AddProductForm/Label";
 import DisabledInput from "../components/DisabledInput";
 import CustomLoader from "../components/CustomLoader";
+import { Modal } from "antd";
+import { FaEye } from 'react-icons/fa'
 function PayRoll() {
     const UserData = JSON.parse(localStorage.getItem("data"));
     const [EmployeePrevoiusSalary, setEmployeePrevoiusSalary] = useState([])
+    const [ModalOpen, setModalOpen] = useState(false)
     const [BankData, setBankData] = useState([])
     const { Base_Url } = useStateContext();
     const [loader, setLoader] = useState(false)
@@ -148,13 +151,59 @@ function PayRoll() {
             })
             .catch(error => console.log('error', error));
     }
-
-
-
     return (
         <>
             {loader ? <CustomLoader /> :
                 <div style={{ height: "93vh", overflowY: "scroll" }}>
+                    <Modal open={ModalOpen} onCancel={() => setModalOpen(false)} width={1000} footer="">
+                        <div className="mx-4 mt-8">
+                            <select
+                                style={{ borderRadius: "5px" }}
+                                id="countries"
+                                className="bg border text-black border-gray-200 rounded  focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01" onChange={(e) => {
+                                    onChnageGetEmployeeMonthly(e.target.value)
+                                }}>
+                                <option className="font-bold" value={(month - 2 + 12) % 12 || 12}>
+                                    {months[month - 3]}
+                                </option>
+                                <option className="font-bold" value={(month - 1 + 12) % 12 || 12}>
+                                    {months[month - 2]}
+                                </option>
+                                <option className="font-bold" value={(month + 12) % 12 || 12}>
+                                    {months[month - 1]}
+                                </option>
+                                <option selected className="font-bold" value={month + 1}>
+                                    {months[month]}
+                                </option>
+                            </select>
+                        </div>
+                        <div className="mt-3 mx-4" style={{ height: "355px", overflowY: 'scroll' }}>
+                            <div class="relative overflow-x-auto ">
+                                <table class="w-full text-sm text-left text-gray-500">
+                                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
+                                        <tr>
+                                            <th scope="col" class="px-6 py-3 border-r-1">
+                                                Date
+                                            </th>
+                                            <th scope="col" class="px-6 py-3">
+                                                Worked Time
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {MonthlyData && MonthlyData.Data.map((el, index) => {
+                                            return (
+                                                <tr key={index} class="bg-white border-b ">
+                                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border-r-1">{el.date}</th>
+                                                    <td class="px-6 py-4" style={{ color: el.timeStatus === 2 ? "red" : el.timeStatus === 3 ? "blue" : "green" }}>{el.timeStatus === 3 ? "SunDay" : el.Time}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </Modal>
                     <div className="p-5 mx-5 mb-3  rounded-2xl bg-slate-200">
                         <div className="flex flex-col gap-5">
                             <div>
@@ -187,12 +236,11 @@ function PayRoll() {
                                             value={Data.date_of_joining}
                                         />
                                     </div>
-
                                     <div>
                                         <Label label="Employee ID" />
                                         <DisabledInput
                                             placeholder="Enter Last Name"
-                                            value={Data.employee_id}
+                                            value={Data?.employee_id}
                                         />
                                     </div>
                                     <div>
@@ -254,6 +302,9 @@ function PayRoll() {
                                             />
                                         </div>
                                     </div>
+                                    <div className="flex items-center">
+                                        <p className="f03 font-semibold cursor-pointer" onClick={() => setModalOpen(true)}>View Monthly Report</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +328,7 @@ function PayRoll() {
                             })}
                         </div>
                         <div className="bg-white rounded-xl">
-                            <div className="mx-10 mt-4">
+                            <div className="mx-5 mt-2">
                                 <select
                                     style={{ borderRadius: "5px" }}
                                     id="countries"
@@ -298,30 +349,88 @@ function PayRoll() {
                                     </option>
                                 </select>
                             </div>
-                            <div className="mt-5 mx-10" style={{ height: "355px", overflowY: 'scroll' }}>
-                                <div class="relative overflow-x-auto ">
-                                    <table class="w-full text-sm text-left text-gray-500">
-                                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
-                                            <tr>
-                                                <th scope="col" class="px-6 py-3 border-r-1">
-                                                    Date
-                                                </th>
-                                                <th scope="col" class="px-6 py-3">
-                                                    Worked Time
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {MonthlyData && MonthlyData.Data.map((el, index) => {
-                                                return (
-                                                    <tr key={index} class="bg-white border-b ">
-                                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap border-r-1">{el.date}</th>
-                                                        <td class="px-6 py-4" style={{ color: el.timeStatus === 2 ? "red" : el.timeStatus === 3 ? "blue" : "green" }}>{el.timeStatus === 3 ? "SunDay" : el.Time}</td>
-                                                    </tr>
-                                                )
-                                            })}
-                                        </tbody>
-                                    </table>
+                            <div id="pdf-content" className="bg-white rounded-lg mx-5" >
+                                <div className="grid grid-cols-2 mx-5 gap-5">
+                                    <div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Employee Name</p>
+                                            <p className="f02">{Data.first_name + " " + Data.last_name}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">EmployeeID</p>
+                                            <p className="f02">{Data?.employee_id}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Department</p>
+                                            <p className="f02">{Data?.Branch?.employee_id}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Date Of Joining</p>
+                                            <p className="f02">{Data.date_of_joining}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Gross Salary</p>
+                                            <p className="f02">{BankData.salary}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Bank Name</p>
+                                            <p className="f02">{BankData.bank_name}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Bank A/c No</p>
+                                            <p className="f02">{BankData.account_number ? BankData.account_number.slice(0, 6) + "XXXXXX" : ''}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Pan Card Number</p>
+                                            <p className="f02">{BankData.pan_number}</p>
+
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Total Working Days</p>
+                                            <p className="f02">{0}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Paid Days</p>
+                                            <p className="f02">{0}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="h-[1px] bg-black mx-5" />
+                                <div className="grid grid-cols-1 mx-5 gap-5">
+                                    <div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Basic Salary</p>
+                                            <p className="f02">{BankData.basic_salary}</p>
+
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">House Rent Allowances</p>
+                                            <p className="f02">{BankData.house_allowances}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Conveyance Allowances</p>
+                                            <p className="f02">{BankData.conveyance_allowances}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Medical Allowances</p>
+                                            <p className="f02">{BankData.medical_allowances}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Special Allowances</p>
+                                            <p className="f02">{BankData.special_allowances}</p>
+                                        </div>
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Gross Salary</p>
+                                            <p className="f02">{BankData.salary}</p>
+                                        </div>
+                                        <div className="h-[1px] bg-black " />
+                                        <div className="flex justify-between items-center my-2">
+                                            <p className="f02">Net Salary:</p>
+                                            <p className="f02">{BankData.salary}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

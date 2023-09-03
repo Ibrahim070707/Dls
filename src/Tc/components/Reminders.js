@@ -37,27 +37,27 @@ function Reminders({ Height, MaxHeight, Data }) {
   //       .catch((error) => console.log("error", error));
   //   }
   // };
-  // RemindersData.map((el, index) => {
-  //   const interval = setInterval(() => {
-  //     const currentDate = new Date();
-  //     const currentTime = currentDate.getTime();
+  Data.map((el, index) => {
+    const interval = setInterval(() => {
+      const currentDate = new Date();
+      const currentTime = currentDate.getTime();
 
-  //     // Convert target date and time to a single timestamp for comparison
-  //     const [year, month, day] = el.date.split("-");
-  //     const [hours, minutes] = el.time.split(":");
-  //     const targetTimestamp = new Date(
-  //       year,
-  //       month - 1,
-  //       day,
-  //       hours,
-  //       minutes
-  //     ).getTime();
+      // Convert target date and time to a single timestamp for comparison
+      const [year, month, day] = el.date.split("-");
+      const [hours, minutes] = el.time.split(":");
+      const targetTimestamp = new Date(
+        year,
+        month - 1,
+        day,
+        hours,
+        minutes
+      ).getTime();
 
-  //     if (currentTime >= targetTimestamp) {
-  //       setRemindersId((prevIds) => [...prevIds, el.id]);
-  //     }
-  //   }, 5000);
-  // });
+      if (currentTime >= targetTimestamp) {
+        setRemindersId((prevIds) => [...prevIds, el.id]);
+      }
+    }, 5000);
+  });
 
   return (
     <div
