@@ -833,7 +833,7 @@ function Appointment({ Data, RemindersFunction }) {
                                             </div>
                                             <div className="grid grid-cols-4 mt-5 mx-5">
                                                 <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
-                                                    <p className="text-gray-500 f02">OD Rate</p>
+                                                    <p className="text-gray-500 f02">OD Premium</p>
                                                     <p className="text-gray-600 f02 font-semibold">
                                                         <Input
                                                             placeholder="Enter OD Rate"

@@ -8,26 +8,33 @@ import { Toaster, toast, ToastBar } from "react-hot-toast";
 import { useStateContext } from "../../contexts/ContextProvider";
 import Label from "../components/AddProductForm/Label";
 
+
 function CreateEmployee() {
   const { Base_Url } = useStateContext();
   const [loader, setloader] = useState(false);
   const UserData = JSON.parse(localStorage.getItem("data"));
 
-  const [ApiFormData, setApiFormData] = useState({});
+  const [ApiFormData, setApiFormData] = useState({})
 
   const [States, setStates] = useState([]);
   const Token = localStorage.getItem("token");
   const [Cities, setCities] = useState([]);
 
-  const [Photo, setPhoto] = useState("");
-  const [IdProof, setIdProof] = useState("");
-  const [AddressProof, setAddressProof] = useState("");
-  const [Resume, setResume] = useState("");
-  const [CancelationForm, setCancelationForm] = useState("");
+
+  const [Photo, setPhoto] = useState("")
+  const [IdProof, setIdProof] = useState("")
+  const [AddressProof, setAddressProof] = useState("")
+  const [Resume, setResume] = useState("")
+  const [CancelationForm, setCancelationForm] = useState("")
+
+
 
   const [ParmanetsStates, setParmanetsStates] = useState([]);
   const [ParmanentCities, setParmanentCities] = useState([]);
-  const genders = [{ name: "Male" }, { name: "Female" }];
+  const genders = [
+    { name: "Male" },
+    { name: "Female" },
+  ]
   const education = [
     { name: "12th pass" },
     { name: "10th pass" },
@@ -104,10 +111,11 @@ function CreateEmployee() {
     setApiFormData({ ...ApiFormData, ["coresponding_city"]: e.target.value });
   };
 
+
   useEffect(() => {
-    GetStates();
-    setApiFormData({ ...ApiFormData, ["branch_id"]: UserData.branch_id });
-    getStatesParmanent();
+    GetStates()
+    setApiFormData({ ...ApiFormData, ["branch_id"]: UserData.branch_id })
+    getStatesParmanent()
   }, []);
 
   const handleCheckboxAddressChange = (e) => {
@@ -129,6 +137,7 @@ function CreateEmployee() {
         permanent_city: "",
         permanent_pincode: "",
       });
+
     }
   };
   const getStatesParmanent = () => {
@@ -157,7 +166,7 @@ function CreateEmployee() {
         setParmanetsStates(ParStateData);
       })
       .catch((error) => console.log("error", error));
-  };
+  }
   const handleParmanrntStateChange = (e) => {
     let iso = e.target.value;
     ParmanetsStates.map((el) => {
@@ -197,7 +206,7 @@ function CreateEmployee() {
   };
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    setloader(true);
+    setloader(true)
     var myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${Token}`);
@@ -234,22 +243,24 @@ function CreateEmployee() {
     formdata.append("photo", Photo);
     formdata.append("cancallation_form", CancelationForm);
 
+
     var requestOptions = {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: formdata,
-      redirect: "follow",
+      redirect: 'follow'
     };
 
     fetch(`${Base_Url}create/employee`, requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
+      .then(response => response.json())
+      .then(result => {
         if (result.Status === 200) {
-          setloader(false);
-          toast.success("Employee Created Succesfully");
+          setloader(false)
+          toast.success("Employee Created Succesfully")
         }
       })
-      .catch((error) => console.log("error", error));
+      .catch(error => console.log('error', error));
+
   };
 
   return (
@@ -269,7 +280,7 @@ function CreateEmployee() {
         <div className="m-5 px-5 py-3 rounded-2xl bg-slate-200">
           <div className="flex flex-col gap-5">
             <form onSubmit={handleOnSubmit}>
-              <div className="mb-3">
+              <div>
                 <Label label="Basic Details :" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -349,7 +360,7 @@ function CreateEmployee() {
                   </div>
                 </div>
               </div>
-              <div className="mt-3 mb-3">
+              <div className="mt-3">
                 <Label label="Corespondence Address :" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
@@ -391,11 +402,7 @@ function CreateEmployee() {
                     id="countries"
                     className="bg border text-black border-gray-200 text-sm rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 f01 px-4 mb-3 leading-tight"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select State
                     </option>
                     {States.map((country, index) => (
@@ -419,11 +426,7 @@ function CreateEmployee() {
                     id="countries"
                     className="bg border text-black border-gray-200 text-sm rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select City
                     </option>
                     {Cities.map((country, index) => (
@@ -445,15 +448,11 @@ function CreateEmployee() {
                     type="number"
                     maxLength="6"
                     name="branchName"
-                    value={ApiFormData.coresponding_pincode}
                     onChange={(e) => {
-                      const inputValue = e.target.value;
-                      if (inputValue.length <= 6) {
-                        setApiFormData({
-                          ...ApiFormData,
-                          coresponding_pincode: e.target.value,
-                        });
-                      }
+                      setApiFormData({
+                        ...ApiFormData,
+                        ["coresponding_pincode"]: e.target.value,
+                      });
                     }}
                   />
                 </div>
@@ -464,12 +463,12 @@ function CreateEmployee() {
                     type="checkbox"
                     value="1"
                     onChange={handleCheckboxAddressChange}
-                    className="form-checkbox h-5 w-5 text-blue-500 mb-3"
+                    className="form-checkbox h-5 w-5 text-blue-500"
                   />
-                  <span className="ml-2 text-sm font-bold mb-3">Same as above</span>
+                  <span className="ml-2 text-sm font-bold">Same as above</span>
                 </label>
               </div>
-              <div className="mb-3">
+              <div>
                 <Label label="Permanent Address :" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
@@ -513,23 +512,15 @@ function CreateEmployee() {
                     id="countries"
                     className="bg border text-black border-gray-200 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01"
                   >
-                    {ApiFormData.permanent_state ? (
-                      <option
-                        className="text-gray-400 font-bold"
-                        selected
-                        value={ApiFormData.permanent_state}
-                      >
-                        {ApiFormData.permanent_state}
-                      </option>
-                    ) : (
-                      <option
-                        className="text-gray-400 font-bold"
-                        disabled
-                        selected
-                      >
-                        Select State
-                      </option>
-                    )}
+                    {
+                      ApiFormData.permanent_state ?
+                        <option className="text-gray-400 font-bold" selected value={ApiFormData.permanent_state}>
+                          {ApiFormData.permanent_state}
+                        </option> :
+                        <option className="text-gray-400 font-bold" disabled selected>
+                          Select State
+                        </option>
+                    }
                     {ParmanetsStates.map((state, index) => (
                       <option
                         key={index}
@@ -551,23 +542,15 @@ function CreateEmployee() {
                     id="countries"
                     className="bg border text-black border-gray-200  rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01"
                   >
-                    {ApiFormData.permanent_city ? (
-                      <option
-                        className="text-gray-400 font-bold"
-                        selected
-                        value={ApiFormData.permanent_city}
-                      >
-                        {ApiFormData.permanent_city}
-                      </option>
-                    ) : (
-                      <option
-                        className="text-gray-400 font-bold"
-                        disabled
-                        selected
-                      >
-                        Select City
-                      </option>
-                    )}
+                    {
+                      ApiFormData.permanent_city ?
+                        <option className="text-gray-400 font-bold" selected value={ApiFormData.permanent_city}>
+                          {ApiFormData.permanent_city}
+                        </option> :
+                        <option className="text-gray-400 font-bold" disabled selected>
+                          Select City
+                        </option>
+                    }
                     {ParmanentCities.map((city, index) => (
                       <option
                         key={index}
@@ -590,21 +573,19 @@ function CreateEmployee() {
                     maxLength="6"
                     value={ApiFormData.permanent_pincode}
                     onChange={(e) => {
-                      const inputValue = e.target.value;
-                      if (inputValue.length <= 6) {
-                        setApiFormData({
-                          ...ApiFormData,
-                          permanent_pincode: e.target.value,
-                        });
-                      }
+                      setApiFormData({
+                        ...ApiFormData,
+                        ["permanent_pincode"]: e.target.value,
+                      });
                     }}
                   />
                 </div>
               </div>
-              <div className="mt-3 mb-3">
+              <div className="mt-3">
                 <Label label="Educactional qualification :" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
+
                 <div>
                   <Label label="Select Qualification" Required={true} />
                   <select
@@ -618,11 +599,7 @@ function CreateEmployee() {
                     id="gender"
                     className="bg border text-black border-gray-200 rounded focus:ring-emerald-500 focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01"
                   >
-                    <option
-                      className="text-gray-400 font-bold"
-                      disabled
-                      selected
-                    >
+                    <option className="text-gray-400 font-bold" disabled selected>
                       Select Qualification
                     </option>
                     {education.map((edu, index) => (
@@ -657,12 +634,10 @@ function CreateEmployee() {
                     placeholder="Enter Experience in Year"
                     type="number"
                     name="branchName"
-                    value={ApiFormData.experience_in_year}
                     onChange={(e) => {
-                      const inputValue = Math.max(0, parseInt(e.target.value));
                       setApiFormData({
                         ...ApiFormData,
-                        experience_in_year: inputValue,
+                        ["experience_in_year"]: e.target.value,
                       });
                     }}
                   />
@@ -683,7 +658,7 @@ function CreateEmployee() {
                   />
                 </div>
               </div>
-              <div className="mt-3 mb-3">
+              <div className="mt-3">
                 <Label label="Internal Details : " />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-5">
@@ -694,15 +669,10 @@ function CreateEmployee() {
                     type="number"
                     maxLength="10"
                     name="branchName"
-                    value={ApiFormData.personal_mobile_no}
                     onChange={(e) => {
-                      const inputValue = Math.max(0, parseInt(e.target.value)); // Ensure a positive number
-                      const limitedInputValue = inputValue
-                        .toString()
-                        .slice(0, 10); // Limit to 10 characters
                       setApiFormData({
                         ...ApiFormData,
-                        personal_mobile_no: limitedInputValue,
+                        ["personal_mobile_no"]: e.target.value,
                       });
                     }}
                   />
@@ -715,17 +685,14 @@ function CreateEmployee() {
                     type="number"
                     name="branchName"
                     maxLength="10"
-                    value={ApiFormData.official_mobile_no}
                     onChange={(e) => {
-                      const inputValue = e.target.value.slice(0, 10);
                       setApiFormData({
                         ...ApiFormData,
-                        official_mobile_no: inputValue,
+                        ["official_mobile_no"]: e.target.value,
                       });
                     }}
                   />
                 </div>
-
                 {/* email id */}
                 <div>
                   <Label label="Email ID" Required={true} />
@@ -734,25 +701,15 @@ function CreateEmployee() {
                     type="email"
                     name="branchName"
                     onChange={(e) => {
-                      const emailValue = e.target.value;
                       setApiFormData({
                         ...ApiFormData,
-                        email_id: emailValue,
+                        ["email_id"]: e.target.value,
                       });
-                    }}
-                    onBlur={(e) => {
-                      const emailValue = e.target.value;
-                      const emailRegex =
-                        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-                      if (emailValue && !emailRegex.test(emailValue)) {
-                        // Invalid email format, you can handle this according to your requirement
-                        toast.error("Invalid email format");
-                      }
                     }}
                   />
                 </div>
                 {/* alternate email id */}
-                {/* <div>
+                <div>
                   <Label label="Alternate Email ID" Required={true} />
                   <Input
                     placeholder="Enter Alternate Email ID"
@@ -765,7 +722,7 @@ function CreateEmployee() {
                       });
                     }}
                   />
-                </div> */}
+                </div>
                 {/* date of joining */}
                 <div>
                   <Label label="Date of Joining" Required={true} />
@@ -796,7 +753,7 @@ function CreateEmployee() {
                   />
                 </div>
               </div>
-              <div className="mt-3 mb-3">
+              <div className="mt-3">
                 <Label label="Basic Details of Employee :" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
@@ -832,10 +789,11 @@ function CreateEmployee() {
                       id="multiple_files"
                       type="file"
                       accept="image/*"
+
                       onChange={(e) => setAddressProof(e.target.files[0])}
                     />
                   </div>
-                </div>
+                </div >
                 <div className="text-center">
                   <Label label="Resume" />
                   <div className="relative">
@@ -844,7 +802,9 @@ function CreateEmployee() {
                       id="multiple_files"
                       type="file"
                       accept=".pdf"
+
                       onChange={(e) => setResume(e.target.files[0])}
+
                     />
                   </div>
                 </div>
@@ -857,6 +817,7 @@ function CreateEmployee() {
                       id="multiple_files"
                       type="file"
                       accept=".pdf"
+
                       onChange={(e) => setCancelationForm(e.target.files[0])}
                     />
                   </div>
@@ -872,7 +833,8 @@ function CreateEmployee() {
             </form>
           </div>
         </div>
-      )}
+      )
+      }
     </>
   );
 }

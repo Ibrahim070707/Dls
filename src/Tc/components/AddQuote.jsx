@@ -1253,7 +1253,7 @@ function AddQuote({ Data, RemindersFunction }) {
                           <div className="grid grid-cols-4 mt-5 mx-5">
                             <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
                               <p className="text-gray-500 f02">
-                                OD Rate
+                                OD Premium
                               </p>
                               <p className="text-gray-600 f02 font-semibold">
                                 <Input placeholder="Enter OD Rate" type="number" onChange={(e) => handleOnChange(dataIndex, e, el.id)} name="od_rate" />

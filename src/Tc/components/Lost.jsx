@@ -556,41 +556,98 @@ function Lost({ Data }) {
                     </div>
                 </div>
                 <div className="mt-9 rounded-2xl w-full mb-2" style={{ height: "auto" }}>
-                    {Data.Quotesdata && Data.Quotesdata.map((ol, index) => {
-                        return (
-                            <div className=' rounded-2xl p-3 mb-4' key={index}>
-                                <div className='mb-2'>
-                                    <div className="grid grid-cols-3 mt-5 mx-5">
-                                        <div className='border-r-2 grid items-center' style={{ gridTemplateColumns: "27% auto" }}>
-                                            <img src={MediaBase_Url + ol.image} width="60px" />
-                                            <div className='flex justify-center flex-col items-center text-sm'>
-                                                <p className='font-semibold'>{ol.title}</p>
-                                                <p className='text-sm text-center'>IDV:₹{ol.IDV}(min value:{ol.min_value}-max value:{ol.max_value})</p>
+                    {Data.Quotesdata &&
+                        Data.Quotesdata.map((ol, index) => {
+                            return (
+                                <div className="bg-white rounded-2xl p-3 mb-2" key={index}>
+                                    <div className="mb-2">
+                                        <div className="grid grid-cols-3 mt-5 mx-5">
+                                            <div
+                                                className=" grid items-center"
+                                                style={{ gridTemplateColumns: "27% auto" }}
+                                            >
+                                                <img src={MediaBase_Url + ol.QuoteImage} width="60px" />
+                                                <div className="flex justify-center flex-col items-center text-sm">
+                                                    <p className="font-semibold">{ol.QuoteName}</p>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-center flex-col items-center f02">
+                                                <p className="text-gray-400">Net Premium</p>
+                                                <Input
+                                                    placeholder="Enter Net Discount"
+                                                    name="net_premium"
+                                                    type="number"
+                                                    readOnly
+                                                    value={ol.net_premium}
+                                                />
+                                            </div>
+                                            <div className="flex justify-center flex-col items-center  f02">
+                                                <p className="text-gray-400 ">Gross Premium</p>
+                                                <p>
+                                                    <Input
+                                                        placeholder="Enter Gross Premium"
+                                                        type="number"
+                                                        name="gross_premium"
+                                                        readOnly
+                                                        value={ol.gross_premium}
+                                                    />
+                                                </p>
                                             </div>
                                         </div>
-                                        <div className='flex justify-center flex-col items-center border-r-2' >
-                                            <p className='text-gray-400'>Tariff Discount</p>
-                                            <p>{ol.tariff_discount}</p>
-                                        </div>
-                                        <div className='flex justify-center flex-col items-center '>
-                                            <p className='text-gray-400'>Total Premium</p>
-                                            <p>{ol.total_premium}</p>
-                                        </div>
-                                    </div>
-                                    <div className='grid grid-cols-2 mt-5 mx-5'>
-                                        <div className='bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2'>
-                                            <p className='text-gray-500'>Without Addons Covers</p>
-                                            <p className="text-gray-600 font-semibold">₹{ol.without_addon_covers}</p>
-                                        </div>
-                                        <div className='bg-gray-100 flex-col px-5 py-4 flex justify-center items-center '>
-                                            <p className='text-gray-500'>With Addons Covers</p>
-                                            <p className="text-gray-600 font-semibold">₹{ol.with_addon_covers}</p>
+                                        <div className="grid grid-cols-4 mt-5 mx-5">
+                                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
+                                                <p className="text-gray-500 f02">OD Premium</p>
+                                                <p className="text-gray-600 f02 font-semibold">
+                                                    <Input
+                                                        placeholder="Enter OD Rate"
+                                                        type="number"
+                                                        name="od_rate"
+                                                        readOnly
+                                                        value={ol.od_rate}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
+                                                <p className="text-gray-500 f02">ADDON Rate</p>
+                                                <p className="text-gray-600 f02 font-semibold">
+                                                    <Input
+                                                        placeholder="Enter ADDON Rate"
+                                                        type="number"
+                                                        name="addon_rate"
+                                                        readOnly
+                                                        value={ol.addon_rate}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center border-r-2">
+                                                <p className="text-gray-500 f02">TP Rate</p>
+                                                <p className="text-gray-600 f02 font-semibold">
+                                                    <Input
+                                                        placeholder="Enter TP Rate"
+                                                        type="number"
+                                                        name="tp_rate"
+                                                        readOnly
+                                                        value={ol.tp_rate}
+                                                    />
+                                                </p>
+                                            </div>
+                                            <div className="bg-gray-100 flex-col px-5 py-4 flex justify-center items-center ">
+                                                <p className="text-gray-500 f02">Tariff Discount %</p>
+                                                <p className="text-gray-600 f02 font-semibold">
+                                                    <Input
+                                                        placeholder="Enter Tariff Discount"
+                                                        type="number"
+                                                        name="tariif_descount"
+                                                        readOnly
+                                                        value={ol.tariif_descount}
+                                                    />
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        )
-                    })}
+                            );
+                        })}
                     <div className="mt-6 mb-8 flex justify-center items-center gap-5">
                         <CustomButton type={1} Onclick={() => navigate("/MyTask")} Title="Go Back" BgColor="#2ab86a" />
                         {/* <CustomButton type={1} Onclick={handleOnSubmit} Title="Submit" BgColor="#2ab86a" /> */}

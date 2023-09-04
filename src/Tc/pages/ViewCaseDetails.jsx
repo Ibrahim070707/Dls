@@ -9,7 +9,7 @@ import Convience from "../components/Convience";
 import Appointment from "../components/Appointment";
 import Convert from "../components/Convert";
 import Lost from "../components/Lost";
-import RenderCaseDetails from "../components/RenderCaseDetails";
+// import RenderCaseDetails from "../components/RenderCaseDetails";
 import { useParams } from "react-router-dom";
 
 function ViewCaseDetails({ RemindersData, GetRemindersData }) {
