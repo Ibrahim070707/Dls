@@ -101,41 +101,55 @@ function AddQuote({ Data, RemindersFunction }) {
     } else if (QuoteIdsRef.current.length < 3) {
       toast.error("Please Select Minimum 3 Quotes");
     } else {
-      SaveApiCall();
-      AddReminder();
-      AddQuotePremiumData();
-      generateAndDownloadPDF();
-      var myHeaders = new Headers();
-      myHeaders.append("Accept", "application/json");
-      myHeaders.append("Authorization", `Bearer ${Token}`);
 
-      var formdata = new FormData();
-      formdata.append("case_id", Data.id);
-      formdata.append("emp_id", UserData.id);
-      formdata.append("reminder_date", ApiFormData.reminder_date);
-      formdata.append("reminder_time", ApiFormData.reminder_time);
+      if (ApiFormData.reminder_date) {
+        if (ApiFormData.reminder_time) {
+          if (ApiFormData.Allocation_remark) {
 
-      QuoteIdsRef.current.map((ol) => {
-        formdata.append("quote_id[]", `${ol}`);
-      });
+            SaveApiCall();
+            AddReminder();
+            AddQuotePremiumData();
+            var myHeaders = new Headers();
+            myHeaders.append("Accept", "application/json");
+            myHeaders.append("Authorization", `Bearer ${Token}`);
 
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: formdata,
-        redirect: "follow",
-      };
+            var formdata = new FormData();
+            formdata.append("case_id", Data.id);
+            formdata.append("emp_id", UserData.id);
+            formdata.append("reminder_date", ApiFormData.reminder_date);
+            formdata.append("reminder_time", ApiFormData.reminder_time);
 
-      fetch(`${Base_Url}GanerateQuote`, requestOptions)
-        .then((response) => response.json())
-        .then((result) => {
-          if (result.Status === 200) {
-            RemindersFunction();
-            toast.success("Quote Ganerated Successfully");
-            navigate("/MyTask");
+            QuoteIdsRef.current.map((ol) => {
+              formdata.append("quote_id[]", `${ol}`);
+            });
+
+            var requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: formdata,
+              redirect: "follow",
+            };
+
+            fetch(`${Base_Url}GanerateQuote`, requestOptions)
+              .then((response) => response.json())
+              .then((result) => {
+                if (result.Status === 200) {
+                  RemindersFunction();
+                  toast.success("Quote Ganerated Successfully");
+                  navigate("/MyTask");
+                }
+              })
+              .catch((error) => console.log("error", error));
+
+          } else {
+            toast.error("Remarks Field is Required")
           }
-        })
-        .catch((error) => console.log("error", error));
+        } else {
+          toast.error("Reminder Time Field is Required")
+        }
+      } else {
+        toast.error("Reminder Date Field is Required")
+      }
     }
   };
   const SaveApiCall = () => {
@@ -235,7 +249,9 @@ function AddQuote({ Data, RemindersFunction }) {
     fetch(`${Base_Url}AddQuotePremiumData`, requestOptions)
       .then(response => response.json())
       .then(result => {
-        console.log(result)
+        if (result.Status === 200) {
+          generateAndDownloadPDF();
+        }
       })
       .catch(error => console.log('error', error));
   }
@@ -268,21 +284,12 @@ function AddQuote({ Data, RemindersFunction }) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.blob();
+        return response.json();
       })
-      .then(blob => {
-        const blobUrl = window.URL.createObjectURL(blob);
-
-        // Create an anchor element to trigger the download
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'example.pdf'; // Specify the desired file name
-        document.body.appendChild(link);
-        link.click();
-
-        // Clean up the anchor element and blob URL
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl);
+      .then(response => {
+        setTimeout(() => {
+          window.open(response.pdfPath);
+        }, 1500);
       })
       .catch(error => console.error('Error generating or downloading PDF:', error));
   };

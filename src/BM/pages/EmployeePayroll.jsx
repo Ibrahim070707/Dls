@@ -214,13 +214,13 @@ function EmployeePayroll() {
         fetch(`${Base_Url}CountEmployeeSalary`, requestOptions)
             .then(response => response.json())
             .then(result => {
+                console.log(result);
                 if (result.Status === 200) {
-                    setEmployeeTime({ ...EmployeeTime, ["Salary"]: result.Salary })
+                    setEmployeeTime({ ...EmployeeTime, ["Salary"]: result.Salary, ["FullDays"]: result.FullDays, ["HalfDays"]: result.HalfDays, ["Absent"]: result.Absent, ["workingDays"]: result.workingDays })
                 }
             })
             .catch(error => console.log('error', error));
     }
-
 
     // const handlePrint = () => {
     //     const contentToPrint = document.getElementById('content-to-print');
@@ -253,7 +253,7 @@ function EmployeePayroll() {
                         <div>
                             <Label label="Basic Details" />
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-5">
                             <div>
                                 <Label label="EmployeeID" />
                                 <Input
@@ -347,23 +347,68 @@ function EmployeePayroll() {
                                     />
                                 </div>
                             </div>
-
                             <div>
                                 <Label label="Total Salary Till Now" />
                                 <div className="date-picker">
-                                    <input
-                                        className="w-full appearance-none block bg-white text-#12406d-700 border border-gray-200 rounded-md  py-2 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 f01"
-                                        id="salary"
+                                    <Input
                                         value={EmployeeTime.Salary}
+                                        className="font-semibold"
                                         readOnly
                                         placeholder="Enter Monthly Salary"
                                     />
                                 </div>
                             </div>
                             <div>
+                                <Label label="Total Working Days" />
+                                <div className="date-picker">
+                                    <Input
+                                        className="font-semibold"
+                                        id="salary"
+                                        value={EmployeeTime.workingDays}
+                                        readOnly
+                                        placeholder="--"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <Label label="Full Days" />
+                                <div className="date-picker">
+                                    <Input
+                                        className="font-semibold text-green-600"
+                                        id="salary"
+                                        value={EmployeeTime.FullDays}
+                                        readOnly
+                                        placeholder="--"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <Label label="Half Days" />
+                                <div className="date-picker">
+                                    <Input
+                                        className="font-semibold text-amber-600"
+                                        id="salary"
+                                        value={EmployeeTime.HalfDays}
+                                        readOnly
+                                        placeholder="--"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <Label label="Absent" />
+                                <div className="date-picker">
+                                    <Input
+                                        className="font-semibold text-red-600 "
+                                        id="salary"
+                                        value={EmployeeTime.Absent}
+                                        readOnly
+                                        placeholder="--"
+                                    />
+                                </div>
+                            </div>
+                            <div>
                                 <p onClick={() => setShowMonthlyReport(true)} className="text-sm font-semibold cursor-pointer mt-[1.6rem]" >Click Here To View Monthly</p>
                             </div>
-
                         </div>
                         <div id="pdf-content" className="bg-white rounded-lg mx-5" >
                             <div className="grid grid-cols-2 mx-5 gap-5">
@@ -449,11 +494,11 @@ function EmployeePayroll() {
                                     </div>
                                     <div className="flex justify-between items-center my-2">
                                         <p className="f02">Total Working Days</p>
-                                        <p className="f02">{0}</p>
+                                        <p className="f02">{EmployeeTime.workingDays}</p>
                                     </div>
                                     <div className="flex justify-between items-center my-2">
                                         <p className="f02">Paid Days</p>
-                                        <p className="f02">{0}</p>
+                                        <p className="f02">Half Days({EmployeeTime.HalfDays}) + Full Days({EmployeeTime.FullDays}) = {EmployeeTime.HalfDays + EmployeeTime.FullDays}</p>
                                     </div>
                                 </div>
                             </div>
@@ -517,12 +562,12 @@ function EmployeePayroll() {
                                     </div>
                                     <div className="flex justify-between items-center my-2">
                                         <p className="f02">Gross Salary</p>
-                                        <p className="f02">{BankData.salary}</p>
+                                        <p className="f02">₹{BankData.salary}/-</p>
                                     </div>
                                     <div className="h-[1px] bg-black " />
                                     <div className="flex justify-between items-center my-2">
                                         <p className="f02">Net Salary:</p>
-                                        <p className="f02">{BankData.salary}</p>
+                                        <p className="f02">₹{BankData.salary}/-</p>
                                     </div>
                                 </div>
                             </div>
