@@ -5,7 +5,7 @@ import Label from "../components/AddProductForm/Label";
 import DisabledInput from "../components/DisabledInput";
 import CustomLoader from "../components/CustomLoader";
 import { Modal } from "antd";
-import { FaEye } from 'react-icons/fa'
+
 function PayRoll() {
     const UserData = JSON.parse(localStorage.getItem("data"));
     const [EmployeePrevoiusSalary, setEmployeePrevoiusSalary] = useState([])
@@ -151,10 +151,11 @@ function PayRoll() {
             })
             .catch(error => console.log('error', error));
     }
+
     return (
         <>
             {loader ? <CustomLoader /> :
-                <div style={{ height: "93vh", overflowY: "scroll" }}>
+                <div style={{ height: "93vh", overflowY: "scroll" }} >
                     <Modal open={ModalOpen} onCancel={() => setModalOpen(false)} width={1000} footer="">
                         <div className="mx-4 mt-8">
                             <select
@@ -328,7 +329,7 @@ function PayRoll() {
                             })}
                         </div>
                         <div className="bg-white rounded-xl">
-                            <div className="mx-5 mt-2">
+                            <div className="flex justify-center items-center gap-3 mx-5 mt-2">
                                 <select
                                     style={{ borderRadius: "5px" }}
                                     id="countries"
@@ -349,7 +350,7 @@ function PayRoll() {
                                     </option>
                                 </select>
                             </div>
-                            <div id="pdf-content" className="bg-white rounded-lg mx-5" >
+                            <div className="bg-white rounded-lg mx-5" >
                                 <div className="grid grid-cols-2 mx-5 gap-5">
                                     <div>
                                         <div className="flex justify-between items-center my-2">

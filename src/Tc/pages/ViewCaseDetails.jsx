@@ -66,6 +66,8 @@ function ViewCaseDetails({ RemindersData, GetRemindersData }) {
     getDataWithQuote()
     ApiFetch()
   }, []);
+
+
   return (
     <div className="bg-gray-200" style={{ height: "auto", minHeight: "160vh" }}>
       <Toaster

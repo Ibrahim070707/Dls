@@ -9,11 +9,13 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Toaster, toast } from "react-hot-toast";
 
 import { useNavigate } from "react-router-dom";
+import print from 'print-js'
 
 function AddQuote({ Data, RemindersFunction }) {
 
   const [ShowQuote, setShowQuote] = useState(true);
   const Token = localStorage.getItem("token");
+  const [HtmlCode, setHtmlCode] = useState(false)
   const [Quotedata, setQuotedata] = useState([]);
   const { Base_Url, MediaBase_Url } = useStateContext();
   const UserData = JSON.parse(localStorage.getItem("data"));
@@ -260,7 +262,7 @@ function AddQuote({ Data, RemindersFunction }) {
   );
   // Create PDF component
 
-  const generateAndDownloadPDF = () => {
+  const generateAndDownloadPDF = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Accept", "application/json");
     myHeaders.append("Authorization", `Bearer ${Token}`);
@@ -284,12 +286,27 @@ function AddQuote({ Data, RemindersFunction }) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();
+        return response.text();
       })
       .then(response => {
+        setHtmlCode(response)
         setTimeout(() => {
-          window.open(response.pdfPath);
-        }, 1500);
+          print({
+            printable: 'HtmlPrintable', // The ID of the element you want to print
+            type: 'html',
+            targetStyles: ['*'], // Apply all styles to the printed content
+          });
+          setHtmlCode(false)
+        }, 1000);
+        // const pdf = new jsPDF('p', 'mm', 'a4'); // Specify page size as A4
+        // pdf.text(10, 10, response); // Add HTML code to PDF
+
+        // // Download the PDF with a specific filename
+        // pdf.save('Quotation.pdf');
+
+        // setTimeout(() => {
+        //   window.open(response.pdfPath);
+        // }, 1000);
       })
       .catch(error => console.error('Error generating or downloading PDF:', error));
   };
@@ -308,6 +325,9 @@ function AddQuote({ Data, RemindersFunction }) {
             duration: 7000,
           }}
         />
+        <div id="HtmlPrintable" className="absolute" style={{ zIndex: "-1", visibility: "hidden" }}>
+          {HtmlCode}
+        </div>
         <div className="flex justify-between items-center mt-5">
           <div className="flex justify-start items-center ml-8">
             <div className="bg-amber-200 text-amber-600 rounded-lg w-16 h-16 flex justify-center items-center text-xl">
