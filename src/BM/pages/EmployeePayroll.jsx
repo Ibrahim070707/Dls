@@ -214,7 +214,6 @@ function EmployeePayroll() {
         fetch(`${Base_Url}CountEmployeeSalary`, requestOptions)
             .then(response => response.json())
             .then(result => {
-                console.log(result);
                 if (result.Status === 200) {
                     setEmployeeTime({ ...EmployeeTime, ["Salary"]: result.Salary, ["FullDays"]: result.FullDays, ["HalfDays"]: result.HalfDays, ["Absent"]: result.Absent, ["workingDays"]: result.workingDays })
                 }
@@ -222,14 +221,6 @@ function EmployeePayroll() {
             .catch(error => console.log('error', error));
     }
 
-    // const handlePrint = () => {
-    //     const contentToPrint = document.getElementById('content-to-print');
-    //     const printOptions = {
-    //         printable: contentToPrint.innerHTML,
-    //         type: 'html',
-    //     };
-    //     printJS(printOptions);
-    // };
 
 
     return (

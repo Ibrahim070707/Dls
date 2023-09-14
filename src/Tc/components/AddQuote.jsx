@@ -9,10 +9,23 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Toaster, toast } from "react-hot-toast";
 
 import { useNavigate } from "react-router-dom";
-import print from 'print-js'
+import { notification } from 'antd';
+
+const Context = React.createContext({
+  name: 'Default',
+});
 
 function AddQuote({ Data, RemindersFunction }) {
 
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (placement) => {
+    api.info({
+      message: `Notification ${placement}`,
+      description: <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>,
+      placement,
+
+    })
+  }
   const [ShowQuote, setShowQuote] = useState(true);
   const Token = localStorage.getItem("token");
   const [HtmlCode, setHtmlCode] = useState(false)
@@ -286,27 +299,10 @@ function AddQuote({ Data, RemindersFunction }) {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.text();
+        return response.json();
       })
       .then(response => {
-        setHtmlCode(response)
-        setTimeout(() => {
-          print({
-            printable: 'HtmlPrintable', // The ID of the element you want to print
-            type: 'html',
-            targetStyles: ['*'], // Apply all styles to the printed content
-          });
-          setHtmlCode(false)
-        }, 1000);
-        // const pdf = new jsPDF('p', 'mm', 'a4'); // Specify page size as A4
-        // pdf.text(10, 10, response); // Add HTML code to PDF
-
-        // // Download the PDF with a specific filename
-        // pdf.save('Quotation.pdf');
-
-        // setTimeout(() => {
-        //   window.open(response.pdfPath);
-        // }, 1000);
+        toast.success(<div className="cursor-pointer"><a download="QuotationPdf" href={response.pdfPath} target="_blank" className="text-sm font-semibold">Donwload Pdf</a></div>)
       })
       .catch(error => console.error('Error generating or downloading PDF:', error));
   };
@@ -316,15 +312,6 @@ function AddQuote({ Data, RemindersFunction }) {
   return (
     <>
       <div className="bg-white mt-5 rounded-2xl w-full mb-9">
-        <Toaster
-          position="top-right"
-          reverseOrder={false}
-          gutter={8}
-          toastOptions={{
-            id: "25663",
-            duration: 7000,
-          }}
-        />
         <div id="HtmlPrintable" className="absolute" style={{ zIndex: "-1", visibility: "hidden" }}>
           {HtmlCode}
         </div>

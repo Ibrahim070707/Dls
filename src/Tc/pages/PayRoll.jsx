@@ -5,6 +5,7 @@ import Label from "../components/AddProductForm/Label";
 import DisabledInput from "../components/DisabledInput";
 import CustomLoader from "../components/CustomLoader";
 import { Modal } from "antd";
+import { FaDownload } from "react-icons/fa";
 
 function PayRoll() {
     const UserData = JSON.parse(localStorage.getItem("data"));
@@ -18,6 +19,11 @@ function PayRoll() {
     const [MonthlyData, setMonthlyData] = useState({ TotalTime: "", Data: [] })
     const d = new Date();
     let month = d.getMonth();
+
+
+
+    const [MonthNumber, setMonthNumber] = useState(month + 1)
+
     const ApiFetch = () => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${Token}`);
@@ -152,6 +158,33 @@ function PayRoll() {
             .catch(error => console.log('error', error));
     }
 
+    const HandlePdfGanaration = () => {
+        setLoader(true)
+        var myHeaders = new Headers();
+        myHeaders.append("Accept", "application/json");
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${Token}`);
+
+        var raw = JSON.stringify({
+            "employee_id": UserData.id,
+            "month": MonthNumber
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(`${Base_Url}GanerateSalarySlip`, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                setLoader(false)
+                window.open(result.pdfPath)
+            })
+            .catch(error => console.log('error', error));
+    };
     return (
         <>
             {loader ? <CustomLoader /> :
@@ -162,7 +195,8 @@ function PayRoll() {
                                 style={{ borderRadius: "5px" }}
                                 id="countries"
                                 className="bg border text-black border-gray-200 rounded  focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01" onChange={(e) => {
-                                    onChnageGetEmployeeMonthly(e.target.value)
+                                    onChnageGetEmployeeMonthly(e.target.value);
+                                    setMonthNumber(e.target.value)
                                 }}>
                                 <option className="font-bold" value={(month - 2 + 12) % 12 || 12}>
                                     {months[month - 3]}
@@ -335,6 +369,7 @@ function PayRoll() {
                                     id="countries"
                                     className="bg border text-black border-gray-200 rounded  focus:bg-white focus:border-black w-full py-2 px-4 mb-3 leading-tight f01" onChange={(e) => {
                                         onChnageGetEmployeeMonthly(e.target.value)
+                                        setMonthNumber(e.target.value)
                                     }}>
                                     <option className="font-bold" value={(month - 2 + 12) % 12 || 12}>
                                         {months[month - 3]}
@@ -349,6 +384,9 @@ function PayRoll() {
                                         {months[month]}
                                     </option>
                                 </select>
+                                <div onClick={HandlePdfGanaration}>
+                                    <FaDownload className="hover:text-blue-500 cursor-pointer" />
+                                </div>
                             </div>
                             <div className="bg-white rounded-lg mx-5" >
                                 <div className="grid grid-cols-2 mx-5 gap-5">
