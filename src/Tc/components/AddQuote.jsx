@@ -302,7 +302,7 @@ function AddQuote({ Data, RemindersFunction }) {
         return response.json();
       })
       .then(response => {
-        toast.success(<div className="cursor-pointer"><a download="QuotationPdf" href={response.pdfPath} target="_blank" className="text-sm font-semibold">Donwload Pdf</a></div>)
+        toast.success(<div className="cursor-pointer"><a download="QuotationPdf" href={response.pdfPath} target="_blank" className="text-sm font-semibold">Click Here Donwload Quoation PDF</a></div>)
       })
       .catch(error => console.error('Error generating or downloading PDF:', error));
   };

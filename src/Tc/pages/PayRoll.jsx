@@ -164,6 +164,8 @@ function PayRoll() {
         myHeaders.append("Accept", "application/json");
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${Token}`);
+        myHeaders.append("Access-Control-Allow-Origin", "*");
+        myHeaders.append("Access-Control-Allow-Origin", "*");
 
         var raw = JSON.stringify({
             "employee_id": UserData.id,
